@@ -119,5 +119,7 @@ namespace CRMIntegration.Domain.Campaings
             Status == MessageStatus.Sent &&
             !DataEntrega.HasValue &&
             DateTime.UtcNow - DataEnvio > TimeSpan.FromMinutes(5);
+
+
     }
 }
