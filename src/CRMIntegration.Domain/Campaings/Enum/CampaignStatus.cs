@@ -6,10 +6,11 @@ namespace CRMIntegration.Domain.Campaings.Enum
 {
     public enum CampaignStatus
     {
-        Criada = 1,       
-        Processando = 2,  
-        Enviada = 3,      
-        Finalizada = 4,   
-        Erro = 5          
+        Created = 1,       
+        Processing = 2,  
+        Sent = 3,      
+        Finished = 4,
+        Canceled = 5,
+        Error = 6          
     }
 }
