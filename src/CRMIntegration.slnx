@@ -1,0 +1,14 @@
+<Solution>
+  <Folder Name="/src/" />
+  <Folder Name="/src/1-Presentation/" />
+  <Folder Name="/src/2-Application/" />
+  <Folder Name="/src/3-Domain/">
+    <Project Path="CRMIntegration.Domain.Core/CRMIntegration.Domain.Core.csproj" Id="42686d8c-9626-4a28-a766-23c007df19d2" />
+    <Project Path="CRMIntegration.Domain/CRMIntegration.Domain.csproj" Id="4723e817-2c6a-43b0-9995-7607c0014178" />
+  </Folder>
+  <Folder Name="/src/4-Infrastructure/" />
+  <Folder Name="/src/4-Infrastructure/4.1-Data/" />
+  <Folder Name="/src/4-Infrastructure/4.2-Services/" />
+  <Folder Name="/src/4-Infrastructure/4.3-CrossCutting/" />
+  <Folder Name="/tests/" />
+</Solution>
