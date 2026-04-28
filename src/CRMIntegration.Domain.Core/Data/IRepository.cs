@@ -4,9 +4,9 @@ namespace CRMIntegration.Domain.Core.Data
 {
     public interface IRepository<TEntity, in TId> where TEntity : IAggregateRoot
     {
-        Task AddAsync(TEntity entity, CancellationToken token = default);
-        Task UpdateAsync(TEntity entity, CancellationToken token = default);
-        Task DeleteAsync(TEntity entity, CancellationToken token = default);
+        Task AddAsync(TEntity entity);
+        Task UpdateAsync(TEntity entity);
+        Task DeleteAsync(TEntity entity);
         Task<TEntity?> GetByIdAsync(TId id, CancellationToken token = default);
     }
 }

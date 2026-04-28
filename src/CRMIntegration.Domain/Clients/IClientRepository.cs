@@ -57,35 +57,36 @@ namespace CRMIntegration.Domain.Clients
         /// </summary>
         /// <param name="cancellationToken">Cancellation token</param>
         /// <returns>Paged result of actionable clients</returns>
-        Task<PagedResult<Client>> GetActionableAsync(CancellationToken cancellationToken = default);
+        Task<PagedResult<Client>> GetActionableAsync(int pageNumber, int pageSize, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Get all active clients
         /// </summary>
         /// <param name="cancellationToken">Cancellation token</param>
         /// <returns>Paged result of active clients</returns>
-        Task<PagedResult<Client>> GetActiveAsync(CancellationToken cancellationToken = default);
+        public Task<PagedResult<Client>> GetActiveAsync(int pageNumber, int pageSize, CancellationToken cancellationToken = default);
+
 
         /// <summary>
         /// Get clients that are actionable and active (ready for campaigns)
         /// </summary>
         /// <param name="cancellationToken">Cancellation token</param>
         /// <returns>Paged result of clients ready for campaigns</returns>
-        Task<PagedResult<Client>> GetReadyForCampaignAsync(CancellationToken cancellationToken = default);
+        Task<PagedResult<Client>> GetReadyForCampaignAsync(int pageNumber, int pageSize, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Get clients synchronized with Voll
         /// </summary>
         /// <param name="cancellationToken">Cancellation token</param>
         /// <returns>Paged result of synchronized clients</returns>
-        Task<PagedResult<Client>> GetSynchronizedWithVollAsync(CancellationToken cancellationToken = default);
+        Task<PagedResult<Client>> GetSynchronizedWithVollAsync(int pageNumber, int pageSize, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Get clients not synchronized with Voll yet
         /// </summary>
         /// <param name="cancellationToken">Cancellation token</param>
         /// <returns>Paged result of clients pending synchronization</returns>
-        Task<PagedResult<Client>> GetNotSynchronizedWithVollAsync(CancellationToken cancellationToken = default);
+        Task<PagedResult<Client>> GetNotSynchronizedWithVollAsync(int pageNumber, int pageSize, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Get clients that need resynchronization with Voll (old sync date)
@@ -94,6 +95,8 @@ namespace CRMIntegration.Domain.Clients
         /// <param name="cancellationToken">Cancellation token</param>
         /// <returns>Paged result of clients needing resynchronization</returns>
         Task<PagedResult<Client>> GetNeedingResynchronizationAsync(
+            int pageNumber,
+            int pageSize,
             int daysToExpire = 30,
             CancellationToken cancellationToken = default);
 
@@ -104,10 +107,12 @@ namespace CRMIntegration.Domain.Clients
         /// <param name="endDate">End date (inclusive)</param>
         /// <param name="cancellationToken">Cancellation token</param>
         /// <returns>Paged result of clients</returns>
-        Task<PagedResult<Client>> GetByCreatedDateRangeAsync(
-            DateTime startDate,
+        public Task<PagedResult<Client>> GetByCreatedDateRangeAsync(DateTime startDate,
             DateTime endDate,
+            int pageNumber,
+            int pageSize,
             CancellationToken cancellationToken = default);
+
 
         /// <summary>
         /// Get clients that were recently actioned
@@ -116,6 +121,8 @@ namespace CRMIntegration.Domain.Clients
         /// <param name="cancellationToken">Cancellation token</param>
         /// <returns>Paged result of recently actioned clients</returns>
         Task<PagedResult<Client>> GetRecentlyActionedAsync(
+            int pageNumber,
+            int pageSize,
             int days = 7,
             CancellationToken cancellationToken = default);
 
@@ -126,6 +133,8 @@ namespace CRMIntegration.Domain.Clients
         /// <param name="cancellationToken">Cancellation token</param>
         /// <returns>Paged result of clients not recently actioned</returns>
         Task<PagedResult<Client>> GetNotRecentlyActionedAsync(
+            int pageNumber,
+            int pageSize,
             int days = 30,
             CancellationToken cancellationToken = default);
 
@@ -134,14 +143,14 @@ namespace CRMIntegration.Domain.Clients
         /// </summary>
         /// <param name="cancellationToken">Cancellation token</param>
         /// <returns>Paged result of inactive clients</returns>
-        Task<PagedResult<Client>> GetInactiveAsync(CancellationToken cancellationToken = default);
+        Task<PagedResult<Client>> GetInactiveAsync(int pageNumber, int pageSize, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Get clients marked as non-actionable
         /// </summary>
         /// <param name="cancellationToken">Cancellation token</param>
         /// <returns>Paged result of non-actionable clients</returns>
-        Task<PagedResult<Client>> GetNonActionableAsync(CancellationToken cancellationToken = default);
+        Task<PagedResult<Client>> GetNonActionableAsync(int pageNumber, int pageSize, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Search clients by name (partial match)
@@ -149,7 +158,7 @@ namespace CRMIntegration.Domain.Clients
         /// <param name="name">Name to search</param>
         /// <param name="cancellationToken">Cancellation token</param>
         /// <returns>Paged result of matching clients</returns>
-        Task<PagedResult<Client>> SearchByNameAsync(string name, CancellationToken cancellationToken = default);
+        Task<PagedResult<Client>> SearchByNameAsync(string name,int pageNumber, int pageSize, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Get paginated list of clients
@@ -224,6 +233,8 @@ namespace CRMIntegration.Domain.Clients
         /// <returns>Paged result of clients</returns>
         Task<PagedResult<Client>> GetByIdsAsync(
             IEnumerable<Guid> ids,
+            int pageNumber,
+            int pageSize,
             CancellationToken cancellationToken = default);
 
         /// <summary>
@@ -232,8 +243,9 @@ namespace CRMIntegration.Domain.Clients
         /// <param name="idsCobMais">List of CobMais IDs</param>
         /// <param name="cancellationToken">Cancellation token</param>
         /// <returns>Paged result of clients</returns>
-        Task<PagedResult<Client>> GetByCobMaisIdsAsync(
-            IEnumerable<int> idsCobMais,
+        public Task<PagedResult<Client>> GetByCobMaisIdsAsync(IEnumerable<int> idsCobMais,
+            int pageNumber,
+            int pageSize,
             CancellationToken cancellationToken = default);
 
         /// <summary>
