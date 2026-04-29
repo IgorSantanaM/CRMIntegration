@@ -1,0 +1,3999 @@
+{
+  "info": {
+    "_postman_id": "bd26c9c3-ea4b-4d16-b646-89f059208e18",
+    "name": "WhatsApp Business API Documentation",
+    "description": "Postman Collection For Official WhatsApp Business API.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "34648372"
+  },
+  "item": [
+    {
+      "name": "WABA",
+      "item": [
+        {
+          "name": "Session Messages",
+          "item": [
+            {
+              "name": "Session Text Message",
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "API-KEY",
+                    "value": "{{api_key}}",
+                    "type": "text"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n    \"to\":\"919999999999\",\n    \"recipient_type\": \"individual\",\n    \"type\":\"text\",\n    \"text\":{\n        \"body\": \"Your Message Here\"\n    }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{domain}}/v1/messages",
+                  "host": [
+                    "{{domain}}"
+                  ],
+                  "path": [
+                    "v1",
+                    "messages"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Session Image Message",
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "API-KEY",
+                    "type": "text",
+                    "value": "{{api_key}}"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n    \"to\":\"91999999999\",\n    \"recipient_type\": \"individual\",\n    \"type\":\"image\",\n    \"image\":{\n        \"link\": \"Your Image Link Here\"\n    }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{domain}}/v1/messages",
+                  "host": [
+                    "{{domain}}"
+                  ],
+                  "path": [
+                    "v1",
+                    "messages"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Session Video Message",
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "API-KEY",
+                    "type": "text",
+                    "value": "{{api_key}}"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n    \"to\":\"91999999999\",\n    \"recipient_type\": \"individual\",\n    \"type\":\"video\",\n    \"video\":{\n        \"link\": \"Your Video Link Here\"\n    }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{domain}}/v1/messages",
+                  "host": [
+                    "{{domain}}"
+                  ],
+                  "path": [
+                    "v1",
+                    "messages"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Session Document Message",
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "API-KEY",
+                    "type": "text",
+                    "value": "{{api_key}}"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n    \"to\":\"91999999999\",\n    \"recipient_type\": \"individual\",\n    \"type\":\"document\",\n    \"document\":{\n        \"link\": \"Your document Link Here\",\n        \"filename\": \"File Name Here\"\n    }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{domain}}/v1/messages",
+                  "host": [
+                    "{{domain}}"
+                  ],
+                  "path": [
+                    "v1",
+                    "messages"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Session List Message (Single Section)",
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "API-KEY",
+                    "type": "text",
+                    "value": "{{api_key}}"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"to\": \"91999999999\",\n  \"recipient_type\": \"individual\",\n  \"type\": \"interactive\",\n  \"interactive\": {\n    \"type\": \"list\",\n    \"header\": {\n      \"type\": \"text\",\n      \"text\": \"your-header-content\"\n    },\n    \"body\": {\n      \"text\": \"your-text-message-content\"\n    },\n    \"footer\": {\n      \"text\": \"your-footer-content\"\n    },\n    \"action\": {\n      \"button\": \"Button Text Comes Here\",\n      \"sections\":[\n        {\n          \"title\":\"your-section-title-content\",\n          \"rows\": [\n            {\n              \"id\":\"unique-row-identifier\",\n              \"title\": \"row-title-content\",\n              \"description\": \"row-description-content\"          \n            },\n            {\n              \"id\":\"unique-row-identifier\",\n              \"title\": \"row-title-content\",\n              \"description\": \"row-description-content\"          \n            }\n          ]\n        }\n      ]\n    }\n  }\n}\n",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{domain}}/v1/messages",
+                  "host": [
+                    "{{domain}}"
+                  ],
+                  "path": [
+                    "v1",
+                    "messages"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Session List Message (Multiple Section)",
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "API-KEY",
+                    "type": "text",
+                    "value": "{{api_key}}"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"to\": \"91999999999\",\n  \"recipient_type\": \"individual\",\n  \"type\": \"interactive\",\n  \"interactive\": {\n    \"type\": \"list\",\n    \"header\": {\n      \"type\": \"text\",\n      \"text\": \"your-header-content\"\n    },\n    \"body\": {\n      \"text\": \"your-text-message-content\"\n    },\n    \"footer\": {\n      \"text\": \"your-footer-content\"\n    },\n    \"action\": {\n      \"button\": \"Button Text Comes Here\",\n      \"sections\":[\n        {\n          \"title\":\"your-section-title-content\",\n          \"rows\": [\n            {\n              \"id\":\"unique-row-identifier\",\n              \"title\": \"row-title-content\",\n              \"description\": \"row-description-content\"          \n            }\n          ]\n        },\n        {\n          \"title\":\"your-section-title-content\",\n          \"rows\": [\n            {\n              \"id\":\"unique-row-identifier\",\n              \"title\": \"row-title-content\",\n              \"description\": \"row-description-content\"          \n            }\n          ]\n        }\n      ]\n    }\n  }\n}\n",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{domain}}/v1/messages",
+                  "host": [
+                    "{{domain}}"
+                  ],
+                  "path": [
+                    "v1",
+                    "messages"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Session Reply Button Message",
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "API-KEY",
+                    "type": "text",
+                    "value": "{{api_key}}"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"to\": \"91999999999\",\n  \"recipient_type\": \"individual\",\n  \"type\": \"interactive\",\n  \"interactive\": {\n    \"type\": \"button\",\n    # start header\n    \"header\": {\n      \"type\": \"text\" | \"image\" | \"video\" | \"document\",\n      \"text\": \"your text\"\n\n      # OR\n      \"document\": {\n        \"link\": \"the-provider-name/protocol://the-url\",\n        \"filename\": \"some-file-name\"\n      },\n\n      # OR\n      \"video\": {\n        \"link\": \"the-provider-name/protocol://the-url\",\n      }\n\n      # OR\n      \"image\": {\n        \"link\": \"http(s)://the-url\",\n      }\n    }, # end header\n    \"body\": {\n      \"text\": \"your-text-body-content\"\n    },\n    \"footer\": { # optional\n      \"text\": \"your-text-footer-content\"\n    },\n    \"action\": {\n      \"buttons\": [\n        {\n          \"type\": \"reply\",\n          \"reply\": {\n            \"id\": \"unique-postback-id\",\n            \"title\": \"First Button’s Title\" \n          }\n        },\n        {\n          \"type\": \"reply\",\n          \"reply\": {\n            \"id\": \"unique-postback-id\",\n            \"title\": \"Second Button’s Title\" \n          }\n        }\n      ] \n    }\n  }\n}\n",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{domain}}/v1/messages",
+                  "host": [
+                    "{{domain}}"
+                  ],
+                  "path": [
+                    "v1",
+                    "messages"
+                  ]
+                }
+              },
+              "response": []
+            }
+          ]
+        },
+        {
+          "name": "Template",
+          "item": [
+            {
+              "name": "Send Template Message",
+              "protocolProfileBehavior": {
+                "disabledSystemHeaders": {
+                  "content-type": true
+                }
+              },
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "API-KEY",
+                    "value": "{{api_key}}",
+                    "type": "text"
+                  },
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json",
+                    "type": "text"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n    \"to\": \"RECEIVER_NUMBER\",\n    \"recipient_type\": \"individual\",\n    \"type\": \"template\",\n    \"template\": {\n        \"language\": {\n            \"policy\": \"deterministic\",\n            \"code\": \"en\"\n        },\n        \"name\": \"test\",\n        \"components\": []\n    }\n}\n",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{domain}}/v1/messages",
+                  "host": [
+                    "{{domain}}"
+                  ],
+                  "path": [
+                    "v1",
+                    "messages"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Template List",
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "API-KEY",
+                    "value": "{{api_key}}",
+                    "type": "text"
+                  }
+                ],
+                "url": {
+                  "raw": "{{domain}}/v1/configs/templates?limit=10&offset=0&fetch_count=true&json=true",
+                  "host": [
+                    "{{domain}}"
+                  ],
+                  "path": [
+                    "v1",
+                    "configs",
+                    "templates"
+                  ],
+                  "query": [
+                    {
+                      "key": "limit",
+                      "value": "10"
+                    },
+                    {
+                      "key": "offset",
+                      "value": "0"
+                    },
+                    {
+                      "key": "fetch_count",
+                      "value": "true"
+                    },
+                    {
+                      "key": "json",
+                      "value": "true"
+                    }
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Update Template",
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "API-KEY",
+                    "value": "{{api_key}}",
+                    "type": "text"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n    \"name\":\"text_header_template\",\r\n    \"category\":\"ALERT_UPDATE\",\r\n    \"language\":\"en\",\r\n    \"components\":[\r\n        {\r\n            \"type\":\"HEADER\",\r\n            \"format\":\"TEXT\",\r\n            \"text\":\"Text Header Can Have Only One Variable {{1}}\",\r\n            \"example\":{\r\n                \"header_text\":[\r\n                    \"headerVariable\"\r\n                ]\r\n            }\r\n        },\r\n        {\r\n            \"type\":\"FOOTER\",\r\n            \"text\":\"Footer Text\"\r\n        },\r\n        {\r\n            \"type\":\"BODY\",\r\n            \"text\":\"Hello {{1}}\\n\\nThis is a test body {{2}}  \",\r\n            \"example\":{\r\n                \"body_text\":[\r\n                    [\r\n                        \"bodyVariable1\",\r\n                        \"bodyVariable2\"\r\n                    ]\r\n                ]\r\n            }\r\n        },\r\n        {\r\n            \"type\":\"BUTTONS\",\r\n            \"buttons\":[\r\n                {\r\n                    \"type\":\"QUICK_REPLY\",\r\n                    \"text\":\"Button 1\"\r\n                },\r\n                {\r\n                    \"type\":\"QUICK_REPLY\",\r\n                    \"text\":\"Button 2\"\r\n                },\r\n                {\r\n                    \"type\":\"QUICK_REPLY\",\r\n                    \"text\":\"Button 3\"\r\n                }\r\n            ]\r\n        }\r\n    ]\r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{domain}}/v1/configs/templates/{{template_id}}",
+                  "host": [
+                    "{{domain}}"
+                  ],
+                  "path": [
+                    "v1",
+                    "configs",
+                    "templates",
+                    "{{template_id}}"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Delete Template",
+              "request": {
+                "method": "DELETE",
+                "header": [
+                  {
+                    "key": "API-KEY",
+                    "value": "{{api_key}}",
+                    "type": "text"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n    \"name\":\"text_header_template\",\r\n    \"category\":\"ALERT_UPDATE\",\r\n    \"language\":\"en\",\r\n    \"components\":[\r\n        {\r\n            \"type\":\"HEADER\",\r\n            \"format\":\"TEXT\",\r\n            \"text\":\"Text Header Can Have Only One Variable {{1}}\",\r\n            \"example\":{\r\n                \"header_text\":[\r\n                    \"headerVariable\"\r\n                ]\r\n            }\r\n        },\r\n        {\r\n            \"type\":\"FOOTER\",\r\n            \"text\":\"Footer Text\"\r\n        },\r\n        {\r\n            \"type\":\"BODY\",\r\n            \"text\":\"Hello {{1}}\\n\\nThis is a test body {{2}}  \",\r\n            \"example\":{\r\n                \"body_text\":[\r\n                    [\r\n                        \"bodyVariable1\",\r\n                        \"bodyVariable2\"\r\n                    ]\r\n                ]\r\n            }\r\n        },\r\n        {\r\n            \"type\":\"BUTTONS\",\r\n            \"buttons\":[\r\n                {\r\n                    \"type\":\"QUICK_REPLY\",\r\n                    \"text\":\"Button 1\"\r\n                },\r\n                {\r\n                    \"type\":\"QUICK_REPLY\",\r\n                    \"text\":\"Button 2\"\r\n                },\r\n                {\r\n                    \"type\":\"QUICK_REPLY\",\r\n                    \"text\":\"Button 3\"\r\n                }\r\n            ]\r\n        }\r\n    ]\r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{domain}}/v1/configs/templates/{{template_name}}",
+                  "host": [
+                    "{{domain}}"
+                  ],
+                  "path": [
+                    "v1",
+                    "configs",
+                    "templates",
+                    "{{template_name}}"
+                  ]
+                }
+              },
+              "response": []
+            }
+          ]
+        },
+        {
+          "name": "Create Template",
+          "item": [
+            {
+              "name": "Standard Template (Only Body)",
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "API-KEY",
+                    "value": "{{api_key}}",
+                    "type": "text"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n    \"name\":\"no_header_template\",\r\n    \"category\":\"ALERT_UPDATE\",\r\n    \"language\":\"en\",\r\n    \"components\":[\r\n        {\r\n            \"type\":\"BODY\",\r\n            \"text\":\"Hello {{1}}\\n\\nThis is a test body {{2}} \",\r\n            \"example\":{\r\n                \"body_text\":[\r\n                    [\r\n                        \"bodyVariable1\",\r\n                        \"bodyVariable2\"\r\n                    ]\r\n                ]\r\n            }\r\n        }\r\n    ]\r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{domain}}/v1/configs/templates",
+                  "host": [
+                    "{{domain}}"
+                  ],
+                  "path": [
+                    "v1",
+                    "configs",
+                    "templates"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Text Header",
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "API-KEY",
+                    "value": "{{api_key}}",
+                    "type": "text"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n    \"name\":\"text_header_template\",\r\n    \"category\":\"ALERT_UPDATE\",\r\n    \"language\":\"en\",\r\n    \"components\":[\r\n        {\r\n            \"type\":\"HEADER\",\r\n            \"format\":\"TEXT\",\r\n            \"text\":\"Text Header Can Have Only One Variable {{1}}\",\r\n            \"example\":{\r\n                \"header_text\":[\r\n                    \"headerVariable\"\r\n                ]\r\n            }\r\n        },\r\n        {\r\n            \"type\":\"FOOTER\",\r\n            \"text\":\"Footer Text\"\r\n        },\r\n        {\r\n            \"type\":\"BODY\",\r\n            \"text\":\"Hello {{1}}\\n\\nThis is a test body {{2}}  \",\r\n            \"example\":{\r\n                \"body_text\":[\r\n                    [\r\n                        \"bodyVariable1\",\r\n                        \"bodyVariable2\"\r\n                    ]\r\n                ]\r\n            }\r\n        },\r\n        {\r\n            \"type\":\"BUTTONS\",\r\n            \"buttons\":[\r\n                {\r\n                    \"type\":\"QUICK_REPLY\",\r\n                    \"text\":\"Button 1\"\r\n                },\r\n                {\r\n                    \"type\":\"QUICK_REPLY\",\r\n                    \"text\":\"Button 2\"\r\n                },\r\n                {\r\n                    \"type\":\"QUICK_REPLY\",\r\n                    \"text\":\"Button 3\"\r\n                }\r\n            ]\r\n        }\r\n    ]\r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{domain}}/v1/configs/templates",
+                  "host": [
+                    "{{domain}}"
+                  ],
+                  "path": [
+                    "v1",
+                    "configs",
+                    "templates"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Image Header",
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "API-KEY",
+                    "value": "{{api_key}}",
+                    "type": "text"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n    \"name\":\"image_header_template\",\r\n    \"category\":\"ALERT_UPDATE\",\r\n    \"language\":\"en\",\r\n    \"components\":[\r\n        {\r\n            \"type\":\"HEADER\",\r\n            \"format\":\"IMAGE\",\r\n            \"example\":{\r\n                \"header_handle\":[\r\n                    \"https://confidentialcontent.s3.eu-west-1.wasabisys.com/waba/l4y50apq.jpeg\"\r\n                ]\r\n            }\r\n        },\r\n        {\r\n            \"type\":\"FOOTER\",\r\n            \"text\":\"Footer Text\"\r\n        },\r\n        {\r\n            \"type\":\"BODY\",\r\n            \"text\":\"Hello {{1}}\\n\\nThis is a test body {{2}} \",\r\n            \"example\":{\r\n                \"body_text\":[\r\n                    [\r\n                        \"bodyVariable1\",\r\n                        \"bodyVariable2\"\r\n                    ]\r\n                ]\r\n            }\r\n        },\r\n        {\r\n            \"type\":\"BUTTONS\",\r\n            \"buttons\":[\r\n                {\r\n                    \"type\":\"QUICK_REPLY\",\r\n                    \"text\":\"Button 1\"\r\n                },\r\n                {\r\n                    \"type\":\"QUICK_REPLY\",\r\n                    \"text\":\"Button 2\"\r\n                },\r\n                {\r\n                    \"type\":\"QUICK_REPLY\",\r\n                    \"text\":\"Button 3\"\r\n                }\r\n            ]\r\n        }\r\n    ]\r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{domain}}/v1/configs/templates",
+                  "host": [
+                    "{{domain}}"
+                  ],
+                  "path": [
+                    "v1",
+                    "configs",
+                    "templates"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Document Header",
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "API-KEY",
+                    "value": "{{api_key}}",
+                    "type": "text"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n    \"name\":\"image_header_template\",\r\n    \"category\":\"ALERT_UPDATE\",\r\n    \"language\":\"en\",\r\n    \"components\":[\r\n        {\r\n            \"type\":\"HEADER\",\r\n            \"format\":\"DOCUMENT\",\r\n            \"example\":{\r\n                \"header_handle\":[\r\n                    \"https://confidentialcontent.s3.eu-west-1.wasabisys.com/waba/l2rlatc4.pdf\"\r\n                ]\r\n            }\r\n        },\r\n        {\r\n            \"type\":\"FOOTER\",\r\n            \"text\":\"Footer Text\"\r\n        },\r\n        {\r\n            \"type\":\"BODY\",\r\n            \"text\":\"Hello {{1}}\\n\\nThis is a test body {{2}} \",\r\n            \"example\":{\r\n                \"body_text\":[\r\n                    [\r\n                        \"bodyVariable1\",\r\n                        \"bodyVariable2\"\r\n                    ]\r\n                ]\r\n            }\r\n        },\r\n        {\r\n            \"type\":\"BUTTONS\",\r\n            \"buttons\":[\r\n                {\r\n                    \"type\":\"QUICK_REPLY\",\r\n                    \"text\":\"Button 1\"\r\n                },\r\n                {\r\n                    \"type\":\"QUICK_REPLY\",\r\n                    \"text\":\"Button 2\"\r\n                },\r\n                {\r\n                    \"type\":\"QUICK_REPLY\",\r\n                    \"text\":\"Button 3\"\r\n                }\r\n            ]\r\n        }\r\n    ]\r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{domain}}/v1/configs/templates",
+                  "host": [
+                    "{{domain}}"
+                  ],
+                  "path": [
+                    "v1",
+                    "configs",
+                    "templates"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Video Header",
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "API-KEY",
+                    "value": "{{api_key}}",
+                    "type": "text"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n    \"name\":\"image_header_template\",\r\n    \"category\":\"ALERT_UPDATE\",\r\n    \"language\":\"en\",\r\n    \"components\":[\r\n        {\r\n            \"type\":\"HEADER\",\r\n            \"format\":\"VIDEO\",\r\n            \"example\":{\r\n                \"header_handle\":[\r\n                    \"https://confidentialcontent.s3.eu-west-1.wasabisys.com/waba/l4we1qri.mp4\"\r\n                ]\r\n            }\r\n        },\r\n        {\r\n            \"type\":\"FOOTER\",\r\n            \"text\":\"Footer Text\"\r\n        },\r\n        {\r\n            \"type\":\"BODY\",\r\n            \"text\":\"Hello {{1}}\\n\\nThis is a test body {{2}} \",\r\n            \"example\":{\r\n                \"body_text\":[\r\n                    [\r\n                        \"bodyVariable1\",\r\n                        \"bodyVariable2\"\r\n                    ]\r\n                ]\r\n            }\r\n        },\r\n        {\r\n            \"type\":\"BUTTONS\",\r\n            \"buttons\":[\r\n                {\r\n                    \"type\":\"QUICK_REPLY\",\r\n                    \"text\":\"Button 1\"\r\n                },\r\n                {\r\n                    \"type\":\"QUICK_REPLY\",\r\n                    \"text\":\"Button 2\"\r\n                },\r\n                {\r\n                    \"type\":\"QUICK_REPLY\",\r\n                    \"text\":\"Button 3\"\r\n                }\r\n            ]\r\n        }\r\n    ]\r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{domain}}/v1/configs/templates",
+                  "host": [
+                    "{{domain}}"
+                  ],
+                  "path": [
+                    "v1",
+                    "configs",
+                    "templates"
+                  ]
+                }
+              },
+              "response": []
+            }
+          ],
+          "description": "For more details on template creation via API, Kindly go through the official documentation on Facebook\n\n[https://developers.facebook.com/docs/whatsapp/business-management-api/message-templates/#retrieve-templates](https://developers.facebook.com/docs/whatsapp/business-management-api/message-templates/#retrieve-templates)"
+        },
+        {
+          "name": "Webhook",
+          "item": [
+            {
+              "name": "Set Webhook",
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "API-KEY",
+                    "value": "{{api_key}}",
+                    "type": "text"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"url\": \"https://example.com\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{domain}}/v1/configs/webhook",
+                  "host": [
+                    "{{domain}}"
+                  ],
+                  "path": [
+                    "v1",
+                    "configs",
+                    "webhook"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Get Webhook",
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "API-KEY",
+                    "value": "{{api_key}}",
+                    "type": "text"
+                  }
+                ],
+                "url": {
+                  "raw": "{{domain}}/v1/configs/webhook",
+                  "host": [
+                    "{{domain}}"
+                  ],
+                  "path": [
+                    "v1",
+                    "configs",
+                    "webhook"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Delete Webhook",
+              "request": {
+                "method": "DELETE",
+                "header": [
+                  {
+                    "key": "API-KEY",
+                    "value": "{{api_key}}",
+                    "type": "text"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"url\": \"https://example.com\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{domain}}/v1/configs/webhook",
+                  "host": [
+                    "{{domain}}"
+                  ],
+                  "path": [
+                    "v1",
+                    "configs",
+                    "webhook"
+                  ]
+                }
+              },
+              "response": []
+            }
+          ]
+        },
+        {
+          "name": "Media",
+          "item": [
+            {
+              "name": "Upload Media",
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "API-KEY",
+                    "value": "{{api_key}}",
+                    "type": "text"
+                  }
+                ],
+                "body": {
+                  "mode": "file",
+                  "file": {}
+                },
+                "url": {
+                  "raw": "{{domain}}/v1/media",
+                  "host": [
+                    "{{domain}}"
+                  ],
+                  "path": [
+                    "v1",
+                    "media"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Retrive Media",
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "API-KEY",
+                    "value": "{{api_key}}",
+                    "type": "text"
+                  }
+                ],
+                "url": {
+                  "raw": "{{domain}}/v1/media.php?id=YOUR-MEDIA-ID-HERE",
+                  "host": [
+                    "{{domain}}"
+                  ],
+                  "path": [
+                    "v1",
+                    "media.php"
+                  ],
+                  "query": [
+                    {
+                      "key": "id",
+                      "value": "YOUR-MEDIA-ID-HERE"
+                    }
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Delete Media",
+              "request": {
+                "method": "DELETE",
+                "header": [
+                  {
+                    "key": "API-KEY",
+                    "value": "{{api_key}}",
+                    "type": "text"
+                  }
+                ],
+                "url": {
+                  "raw": "{{domain}}/v1/media.php?id=YOUR-MEDIA-ID-HERE",
+                  "host": [
+                    "{{domain}}"
+                  ],
+                  "path": [
+                    "v1",
+                    "media.php"
+                  ],
+                  "query": [
+                    {
+                      "key": "id",
+                      "value": "YOUR-MEDIA-ID-HERE"
+                    }
+                  ]
+                }
+              },
+              "response": []
+            }
+          ]
+        },
+        {
+          "name": "Settings",
+          "item": [
+            {
+              "name": "Phone Number Associated With WhatsApp Business API",
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "API-KEY",
+                    "value": "{{api_key}}",
+                    "type": "text"
+                  }
+                ],
+                "url": {
+                  "raw": "{{domain}}/v1/configs/phone_number",
+                  "host": [
+                    "{{domain}}"
+                  ],
+                  "path": [
+                    "v1",
+                    "configs",
+                    "phone_number"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Basic WABA Details (Cloud API Only)",
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "API-KEY",
+                    "value": "{{api_key}}",
+                    "type": "text"
+                  }
+                ],
+                "url": {
+                  "raw": "{{domain}}/v1/configs/general/details",
+                  "host": [
+                    "{{domain}}"
+                  ],
+                  "path": [
+                    "v1",
+                    "configs",
+                    "general",
+                    "details"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Messages Analytics (Cloud API Only)",
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "API-KEY",
+                    "value": "{{api_key}}",
+                    "type": "text"
+                  }
+                ],
+                "url": {
+                  "raw": "{{domain}}/v1/configs/general/analytics/messages?start=1674966964&end=1706502964&granularity=DAY&country_codes=IN&product_types",
+                  "host": [
+                    "{{domain}}"
+                  ],
+                  "path": [
+                    "v1",
+                    "configs",
+                    "general",
+                    "analytics",
+                    "messages"
+                  ],
+                  "query": [
+                    {
+                      "key": "start",
+                      "value": "1674966964",
+                      "description": "UNIX Timestamp"
+                    },
+                    {
+                      "key": "end",
+                      "value": "1706502964",
+                      "description": "UNIX Timestamp"
+                    },
+                    {
+                      "key": "granularity",
+                      "value": "DAY",
+                      "description": "The granularity by which you would like to retrieve the analytics.\n1. HALF_HOUR\n2. DAY\n3. MONTH"
+                    },
+                    {
+                      "key": "country_codes",
+                      "value": "IN",
+                      "description": "The countries for which you would like to retrieve analytics. Provide an array with 2 letter country codes for the countries you would like to include. If not provided, analytics will be returned for all countries you have communicated with. (Optional)",
+                      "type": "text"
+                    },
+                    {
+                      "key": "product_types",
+                      "value": "",
+                      "description": "The types of messages (notification messages and/or customer support messages) for which you want to retrieve notifications. Provide an array and include 0 for notification messages, and 2 for customer support messages. If not provided, analytics will be returned for all messages together.",
+                      "type": "text"
+                    }
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Conversation Analytics (Cloud API Only) Copy",
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "API-KEY",
+                    "value": "{{api_key}}",
+                    "type": "text"
+                  }
+                ],
+                "url": {
+                  "raw": "{{domain}}/v1/configs/general/analytics/conversation?start=1674966964&end=1706502964&granularity=DAILY&metric_types=COST,CONVERSATION&conversation_categories=AUTHENTICATION,MARKETING&conversation_types=FREE_ENTRY_POINT,FREE_TIER,REGULAR&conversation_directions=BUSINESS_INITIATED,USER_INITIATED,UNKNOWN&dimensions=CONVERSATION_CATEGORY,CONVERSATION_DIRECTION,CONVERSATION_TYPE,COUNTRY,PHONE",
+                  "host": [
+                    "{{domain}}"
+                  ],
+                  "path": [
+                    "v1",
+                    "configs",
+                    "general",
+                    "analytics",
+                    "conversation"
+                  ],
+                  "query": [
+                    {
+                      "key": "start",
+                      "value": "1674966964",
+                      "description": "UNIX Timestamp"
+                    },
+                    {
+                      "key": "end",
+                      "value": "1706502964",
+                      "description": "UNIX Timestamp"
+                    },
+                    {
+                      "key": "granularity",
+                      "value": "DAILY",
+                      "description": "The granularity by which you would like to retrieve the analytics.\n1. HALF_HOUR\n2. DAILY\n3. MONTHLY"
+                    },
+                    {
+                      "key": "metric_types",
+                      "value": "COST,CONVERSATION",
+                      "description": "(Comma Seperated Values.) Optional.  List of metrics you would like to receive. If you send an empty list, we return results for all metric types."
+                    },
+                    {
+                      "key": "conversation_categories",
+                      "value": "AUTHENTICATION,MARKETING",
+                      "description": "(Comma Seperated Values.) Optional.  List of conversation categories. If you send an empty list, we return results for all conversation categories.\n1. AUTHENTICATION\n2. MARKETING\n3. SERVICE\n4. UTILITY"
+                    },
+                    {
+                      "key": "conversation_types",
+                      "value": "FREE_ENTRY_POINT,FREE_TIER,REGULAR",
+                      "description": "(Comma Seperated Values.) Optional. List of conversation types. If you send an empty list, we return results for all conversation types.\n1. FREE_ENTRY_POINT\n2. FREE_TIER: \n3. REGULAR: "
+                    },
+                    {
+                      "key": "conversation_directions",
+                      "value": "BUSINESS_INITIATED,USER_INITIATED,UNKNOWN",
+                      "description": "(Comma Seperated Values.) Optional. List of conversation directions. If you send an empty list, we return results for all conversation directions."
+                    },
+                    {
+                      "key": "dimensions",
+                      "value": "CONVERSATION_CATEGORY,CONVERSATION_DIRECTION,CONVERSATION_TYPE,COUNTRY,PHONE",
+                      "description": "(Comma Seperated Values.) Optional. List of breakdowns you would like to apply to your metrics. If you send an empty list, we return results without any breakdowns.\n1. CONVERSATION_CATEGORY\n2. CONVERSATION_DIRECTION\n3. CONVERSATION_TYPE\n4. COUNTRY\n5. PHONE"
+                    }
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Get User Information",
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "API-KEY",
+                    "type": "text",
+                    "value": "{{api_key}}"
+                  }
+                ],
+                "url": {
+                  "raw": "{{domain}}/api/getuser",
+                  "host": [
+                    "{{domain}}"
+                  ],
+                  "path": [
+                    "api",
+                    "getuser"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Get Business Profile",
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "API-KEY",
+                    "value": "{{api_key}}",
+                    "type": "text"
+                  }
+                ],
+                "url": {
+                  "raw": "{{domain}}/v1/settings/business/profile",
+                  "host": [
+                    "{{domain}}"
+                  ],
+                  "path": [
+                    "v1",
+                    "settings",
+                    "business",
+                    "profile"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Update Business Profile",
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "API-KEY",
+                    "value": "{{api_key}}",
+                    "type": "text"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n    \"messaging_product\": \"whatsapp\",\r\n    \"about\": \"ABOUT\",\r\n    \"address\": \"ADDRESS\",\r\n    \"description\": \"DESCRIPTION\",\r\n    \"vertical\": \"INDUSTRY\",\r\n    \"email\": \"EMAIL\",\r\n    \"websites\": [\r\n        \"https://WEBSITE-1\",\r\n        \"https://WEBSITE-2\"\r\n    ],\r\n    \"profile_picture_handle\": \"HANDLE_OF_PROFILE_PICTURE\"\r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{domain}}/v1/settings/business/profile",
+                  "host": [
+                    "{{domain}}"
+                  ],
+                  "path": [
+                    "v1",
+                    "settings",
+                    "business",
+                    "profile"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Get Profile About Content",
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "API-KEY",
+                    "value": "{{api_key}}",
+                    "type": "text"
+                  }
+                ],
+                "url": {
+                  "raw": "{{domain}}/v1/settings/profile/about",
+                  "host": [
+                    "{{domain}}"
+                  ],
+                  "path": [
+                    "v1",
+                    "settings",
+                    "profile",
+                    "about"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Get Profile Photo",
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "API-KEY",
+                    "value": "{{api_key}}",
+                    "type": "text"
+                  }
+                ],
+                "url": {
+                  "raw": "{{domain}}/v1/settings/profile/photo",
+                  "host": [
+                    "{{domain}}"
+                  ],
+                  "path": [
+                    "v1",
+                    "settings",
+                    "profile",
+                    "photo"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Get Profile Photo Link",
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "API-KEY",
+                    "value": "{{api_key}}",
+                    "type": "text"
+                  }
+                ],
+                "url": {
+                  "raw": "{{domain}}/v1/settings/profile/photo?format=link",
+                  "host": [
+                    "{{domain}}"
+                  ],
+                  "path": [
+                    "v1",
+                    "settings",
+                    "profile",
+                    "photo"
+                  ],
+                  "query": [
+                    {
+                      "key": "format",
+                      "value": "link"
+                    }
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Update Profile About",
+              "request": {
+                "method": "PATCH",
+                "header": [
+                  {
+                    "key": "API-KEY",
+                    "value": "{{api_key}}",
+                    "type": "text"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n    \"about\": \"Profile About Here\"\r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{domain}}/v1/settings/profile/about",
+                  "host": [
+                    "{{domain}}"
+                  ],
+                  "path": [
+                    "v1",
+                    "settings",
+                    "profile",
+                    "about"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Update Compliance Info ( Indian Users )",
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "D360-API-KEY",
+                    "value": "{{api_key}}",
+                    "type": "text"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n      \"entity_name\": \"\",\r\n      \"entity_type\": \"Private Company\",\r\n      \"customer_care_details\": {\r\n        \"email\": \"\",\r\n        \"landline_number\": \"\",\r\n        \"mobile_number\": \"\"\r\n      },\r\n      \"grievance_officer_details\": {\r\n        \"name\": \"\",\r\n        \"email\": \"\",\r\n        \"landline_number\": \"\",\r\n        \"mobile_number\": \"\"\r\n      }\r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{domain}}/v1/settings/business/compliance_info",
+                  "host": [
+                    "{{domain}}"
+                  ],
+                  "path": [
+                    "v1",
+                    "settings",
+                    "business",
+                    "compliance_info"
+                  ]
+                }
+              },
+              "response": []
+            }
+          ]
+        },
+        {
+          "name": "Flows",
+          "item": [
+            {
+              "name": "Create Flow",
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{api_key}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "POST",
+                "header": [],
+                "body": {
+                  "mode": "formdata",
+                  "formdata": [
+                    {
+                      "key": "name",
+                      "value": "<FLOW_NAME>",
+                      "type": "text"
+                    },
+                    {
+                      "key": "categories",
+                      "value": "[\"OTHER\"]",
+                      "description": "A list of Flow categories. Multiple values are possible, but at least one is required. Choose the values which represent your business use case. \nAllowed values: \"SIGN_UP\", \"SIGN_IN\", \"APPOINTMENT_BOOKING\", \"LEAD_GENERATION\", \"CONTACT_US\", \"CUSTOMER_SUPPORT\", \"SURVEY\", \"OTHER\"",
+                      "type": "text"
+                    }
+                  ]
+                },
+                "url": {
+                  "raw": "{{domain}}/flow/{{waba_id}}/flows",
+                  "host": [
+                    "{{domain}}"
+                  ],
+                  "path": [
+                    "flow",
+                    "{{waba_id}}",
+                    "flows"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Update Flow Meta",
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{api_key}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "POST",
+                "header": [],
+                "body": {
+                  "mode": "formdata",
+                  "formdata": [
+                    {
+                      "key": "name",
+                      "value": "<FLOW_NAME>",
+                      "type": "text"
+                    },
+                    {
+                      "key": "categories",
+                      "value": "[\"OTHER\"]",
+                      "type": "text",
+                      "description": "A list of Flow categories. Multiple values are possible, but at least one is required. Choose the values which represent your business use case. \nAllowed values: \"SIGN_UP\", \"SIGN_IN\", \"APPOINTMENT_BOOKING\", \"LEAD_GENERATION\", \"CONTACT_US\", \"CUSTOMER_SUPPORT\", \"SURVEY\", \"OTHER\""
+                    }
+                  ]
+                },
+                "url": {
+                  "raw": "{{domain}}/flow/{{version}}/{{flow_id}}",
+                  "host": [
+                    "{{domain}}"
+                  ],
+                  "path": [
+                    "flow",
+                    "{{version}}",
+                    "{{flow_id}}"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Upload Flow JSON Asset",
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{api_key}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "POST",
+                "header": [],
+                "body": {
+                  "mode": "formdata",
+                  "formdata": [
+                    {
+                      "key": "name",
+                      "value": "flow.json",
+                      "type": "text"
+                    },
+                    {
+                      "key": "asset_type",
+                      "value": "FLOW_JSON",
+                      "type": "text"
+                    },
+                    {
+                      "key": "file",
+                      "type": "file",
+                      "value": null
+                    }
+                  ]
+                },
+                "url": {
+                  "raw": "{{domain}}/flow/{{version}}/{{flow_id}}/assets",
+                  "host": [
+                    "{{domain}}"
+                  ],
+                  "path": [
+                    "flow",
+                    "{{version}}",
+                    "{{flow_id}}",
+                    "assets"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Publish Flow",
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{api_key}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "POST",
+                "header": [],
+                "url": {
+                  "raw": "{{domain}}/flow/{{version}}/{{flow_id}}/publish",
+                  "host": [
+                    "{{domain}}"
+                  ],
+                  "path": [
+                    "flow",
+                    "{{version}}",
+                    "{{flow_id}}",
+                    "publish"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Get Flow",
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{api_key}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{domain}}/flow/{{version}}/{{flow_id}}?fields=id,name,categories,preview,status,validation_errors,json_version,data_api_version,data_channel_uri,whatsapp_business_account,application",
+                  "host": [
+                    "{{domain}}"
+                  ],
+                  "path": [
+                    "flow",
+                    "{{version}}",
+                    "{{flow_id}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "fields",
+                      "value": "id,name,categories,preview,status,validation_errors,json_version,data_api_version,data_channel_uri,whatsapp_business_account,application"
+                    }
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Get Flow List",
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{api_key}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{domain}}/flow/{{version}}/{{waba_id}}/flows",
+                  "host": [
+                    "{{domain}}"
+                  ],
+                  "path": [
+                    "flow",
+                    "{{version}}",
+                    "{{waba_id}}",
+                    "flows"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Get Flow Asset",
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{api_key}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{domain}}/flow/{{version}}/{{flow_id}}/assets",
+                  "host": [
+                    "{{domain}}"
+                  ],
+                  "path": [
+                    "flow",
+                    "{{version}}",
+                    "{{flow_id}}",
+                    "assets"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Get Flow Preview URL",
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{api_key}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{domain}}/flow/{{version}}/{{flow_id}}?fields=preview.invalidate(false)",
+                  "host": [
+                    "{{domain}}"
+                  ],
+                  "path": [
+                    "flow",
+                    "{{version}}",
+                    "{{flow_id}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "fields",
+                      "value": "preview.invalidate(false)"
+                    }
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Delete Flow",
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{api_key}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "DELETE",
+                "header": [],
+                "url": {
+                  "raw": "{{domain}}/flow/{{version}}/{{flow_id}}",
+                  "host": [
+                    "{{domain}}"
+                  ],
+                  "path": [
+                    "flow",
+                    "{{version}}",
+                    "{{flow_id}}"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Deprecate Flow",
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{api_key}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "POST",
+                "header": [],
+                "url": {
+                  "raw": "{{domain}}/flow/{{version}}/{{flow_id}}/deprecate",
+                  "host": [
+                    "{{domain}}"
+                  ],
+                  "path": [
+                    "flow",
+                    "{{version}}",
+                    "{{flow_id}}",
+                    "deprecate"
+                  ]
+                }
+              },
+              "response": []
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "CRM",
+      "item": [
+        {
+          "name": "Quick Campaign",
+          "item": [
+            {
+              "name": "List All Campaign",
+              "request": {
+                "auth": {
+                  "type": "apikey",
+                  "apikey": [
+                    {
+                      "key": "value",
+                      "value": "{{api_key}}",
+                      "type": "string"
+                    },
+                    {
+                      "key": "key",
+                      "value": "API-KEY",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{domain}}/crm/campaign",
+                  "host": [
+                    "{{domain}}"
+                  ],
+                  "path": [
+                    "crm",
+                    "campaign"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Campaign Report",
+              "request": {
+                "auth": {
+                  "type": "apikey",
+                  "apikey": [
+                    {
+                      "key": "value",
+                      "value": "{{api-version}}",
+                      "type": "string"
+                    },
+                    {
+                      "key": "key",
+                      "value": "API-KEY",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{domain}}/crm/campaign/:campaign_id/report",
+                  "host": [
+                    "{{domain}}"
+                  ],
+                  "path": [
+                    "crm",
+                    "campaign",
+                    ":campaign_id",
+                    "report"
+                  ],
+                  "variable": [
+                    {
+                      "key": "campaign_id",
+                      "value": null
+                    }
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Delete Campaign",
+              "request": {
+                "auth": {
+                  "type": "apikey",
+                  "apikey": [
+                    {
+                      "key": "value",
+                      "value": "{{api-version}}",
+                      "type": "string"
+                    },
+                    {
+                      "key": "key",
+                      "value": "API-KEY",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{domain}}/crm/campaign/:campaign_id/report",
+                  "host": [
+                    "{{domain}}"
+                  ],
+                  "path": [
+                    "crm",
+                    "campaign",
+                    ":campaign_id",
+                    "report"
+                  ],
+                  "variable": [
+                    {
+                      "key": "campaign_id",
+                      "value": null
+                    }
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Create Quick Campaign",
+              "request": {
+                "auth": {
+                  "type": "apikey",
+                  "apikey": [
+                    {
+                      "key": "value",
+                      "value": "{{api_key}}",
+                      "type": "string"
+                    },
+                    {
+                      "key": "key",
+                      "value": "API-KEY",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "POST",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n    //Receiver's Number will come here\r\n    \"receivers\": [\r\n        \"919999999999,919999999998\"\r\n    ],\r\n    \"title\": \"{{YOUR Campaign Title}}\",\r\n    //Channel ID*\r\n    \"channel\": \"{{YOUR CHANNEL ID}}\",\r\n    //Action can be -  'create','trigger' (Optional) [Default:'create']\r\n    \"action\": \"trigger\",\r\n    //Action can be -  'immediate','schedule' (Optional) [Default:'immediate']\r\n    \"mode\":\"immediate\",\r\n    //Schedule timestamp in milliseconds or ISO String (Optional) [Default]\r\n    \"schedule\":0,\r\n    //Array of messages's JSON\r\n    \"messages\": [\r\n        //messages\r\n        {\r\n            \"type\": \"template\",\r\n            \"template\": {\r\n                \"language\": {\r\n                    \"policy\": \"deterministic\",\r\n                    \"code\": \"en\"\r\n                },\r\n                \"name\": \"hi_alert\",\r\n                \"components\": [\r\n                    {\r\n                        \"type\": \"body\",\r\n                        \"parameters\": [\r\n                            {\r\n                                \"type\": \"text\",\r\n                                \"text\": \"VARIABLE_TEXT\"\r\n                            }\r\n                        ]\r\n                    }\r\n                ]\r\n            }\r\n        }\r\n    ]\r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{domain}}/crm/campaign",
+                  "host": [
+                    "{{domain}}"
+                  ],
+                  "path": [
+                    "crm",
+                    "campaign"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Create Bulk Campaign",
+              "request": {
+                "auth": {
+                  "type": "apikey",
+                  "apikey": [
+                    {
+                      "key": "value",
+                      "value": "{{api_key}}",
+                      "type": "string"
+                    },
+                    {
+                      "key": "key",
+                      "value": "API-KEY",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "POST",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n    //Receiver's Number will come here\r\n    \"receivers\": [\r\n        {\r\n            \"to\":\"919999999999\",\r\n            \"variables\":{\r\n                \"name\":\"WhatsApp User\"\r\n            }\r\n        }\r\n    ],\r\n    \"title\": \"{{YOUR Campaign Title}}\",\r\n    //Channel ID*\r\n    \"channel\": \"{{YOUR CHANNEL ID}}\",\r\n    //Action can be -  'create','trigger' (Optional) [Default:'create']\r\n    \"action\": \"trigger\",\r\n    //Action can be -  'immediate','schedule' (Optional) [Default:'immediate']\r\n    \"mode\":\"immediate\",\r\n    //Schedule timestamp in milliseconds or ISO String (Optional) [Default]\r\n    \"schedule\":0,\r\n    //Array of messages's JSON\r\n    \"messages\": [\r\n        //messages\r\n        {\r\n            \"type\": \"template\",\r\n            \"template\": {\r\n                \"language\": {\r\n                    \"policy\": \"deterministic\",\r\n                    \"code\": \"en\"\r\n                },\r\n                \"name\": \"hi_alert\",\r\n                \"components\": [\r\n                    {\r\n                        \"type\": \"body\",\r\n                        \"parameters\": [\r\n                            {\r\n                                \"type\": \"text\",\r\n                                \"text\": \"{{name}}\"\r\n                            }\r\n                        ]\r\n                    }\r\n                ]\r\n            }\r\n        }\r\n    ]\r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{domain}}/crm/campaign",
+                  "host": [
+                    "{{domain}}"
+                  ],
+                  "path": [
+                    "crm",
+                    "campaign"
+                  ]
+                }
+              },
+              "response": []
+            }
+          ]
+        },
+        {
+          "name": "Send WhatsApp Template",
+          "item": [
+            {
+              "name": "Send Template Message",
+              "protocolProfileBehavior": {
+                "disabledSystemHeaders": {
+                  "content-type": true
+                }
+              },
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "API-KEY",
+                    "value": "{{api_key}}",
+                    "type": "text"
+                  },
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json",
+                    "type": "text"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"to\": \"91999999999\",\n  \"type\": \"template\",\n  \"template\": {\n    \"namespace\": \"your_namespace_id\",\n    \"language\": {\n      \"policy\": \"deterministic\",\n      \"code\": \"en\"\n    },\n    \"name\": \"name_here\",\n    \"components\": [\n    {\n      \"type\" : \"body\",\n      \"parameters\": [\n        {\n          \"type\": \"text\",\n          \"text\": \"text_here\"\n        },\n        {\n          \"type\": \"text\",\n          \"text\": \"text_here\"\n        }\n      ] \n      }\n    ]\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{domain}}/v1/messages",
+                  "host": [
+                    "{{domain}}"
+                  ],
+                  "path": [
+                    "v1",
+                    "messages"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Schedule Template Message",
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "API-KEY",
+                    "value": "{{api_key}}",
+                    "type": "text"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n    \"schedule\": \"2023-06-03T14:41:31.000Z\",\n    \"to\": \"91999999999\",\n    \"type\": \"template\",\n    \"template\": {\n        \"namespace\": \"your_namespace_id\",\n        \"language\": {\n            \"policy\": \"deterministic\",\n            \"code\": \"en\"\n        },\n        \"name\": \"name_here\",\n        \"components\": [\n            {\n                \"type\": \"body\",\n                \"parameters\": [\n                    {\n                        \"type\": \"text\",\n                        \"text\": \"text_here\"\n                    },\n                    {\n                        \"type\": \"text\",\n                        \"text\": \"text_here\"\n                    }\n                ]\n            }\n        ]\n    }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{domain}}/v1/messages",
+                  "host": [
+                    "{{domain}}"
+                  ],
+                  "path": [
+                    "v1",
+                    "messages"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Template List",
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "API-KEY",
+                    "value": "{{api_key}}",
+                    "type": "text"
+                  }
+                ],
+                "url": {
+                  "raw": "{{domain}}/v1/configs/templates?limit=10&offset=0",
+                  "host": [
+                    "{{domain}}"
+                  ],
+                  "path": [
+                    "v1",
+                    "configs",
+                    "templates"
+                  ],
+                  "query": [
+                    {
+                      "key": "limit",
+                      "value": "10"
+                    },
+                    {
+                      "key": "offset",
+                      "value": "0"
+                    }
+                  ]
+                }
+              },
+              "response": []
+            }
+          ]
+        },
+        {
+          "name": "Custom Field Settings",
+          "item": [
+            {
+              "name": "List All Custom Field",
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "API-KEY",
+                    "value": "{{api_key}}",
+                    "type": "text"
+                  }
+                ],
+                "url": {
+                  "raw": "{{domain}}/crm/setting/custom-field",
+                  "host": [
+                    "{{domain}}"
+                  ],
+                  "path": [
+                    "crm",
+                    "setting",
+                    "custom-field"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Create Custom Field",
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "API-KEY",
+                    "value": "API Key",
+                    "type": "text"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n    \"name\":\"CUSTOM FIELD NAME\",\r\n    \"type\":\"CUSTOM FIELD TYPE\",\r\n    \"description\":\"CUSTOM FIELD DESCRIPTION\"\r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{domain}}/crm/setting/custom-field",
+                  "host": [
+                    "{{domain}}"
+                  ],
+                  "path": [
+                    "crm",
+                    "setting",
+                    "custom-field"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Delete Custom Field",
+              "request": {
+                "method": "DELETE",
+                "header": [
+                  {
+                    "key": "API-KEY",
+                    "value": "API Key",
+                    "type": "text"
+                  }
+                ],
+                "url": {
+                  "raw": "{{domain}}/crm/setting/custom-field/:id",
+                  "host": [
+                    "{{domain}}"
+                  ],
+                  "path": [
+                    "crm",
+                    "setting",
+                    "custom-field",
+                    ":id"
+                  ],
+                  "variable": [
+                    {
+                      "key": "id",
+                      "value": null,
+                      "description": "Custom Field ID"
+                    }
+                  ]
+                }
+              },
+              "response": []
+            }
+          ]
+        },
+        {
+          "name": "Chat Settings",
+          "item": [
+            {
+              "name": "Create Contact",
+              "request": {
+                "auth": {
+                  "type": "noauth"
+                },
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "API-KEY",
+                    "value": "API Key",
+                    "type": "text"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n    \"whatsapp\":\"\",\r\n    \"email\":\"\",\r\n    \"chat_name\":\"\",\r\n    \"custom_fields\":[\r\n        {\r\n            \"id\":\"\",\r\n            \"value\":\"\"\r\n        }\r\n    ],\r\n    \"chat_operator\":\"\"\r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{domain}}/crm/chat",
+                  "host": [
+                    "{{domain}}"
+                  ],
+                  "path": [
+                    "crm",
+                    "chat"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Mark Chat as Done",
+              "request": {
+                "auth": {
+                  "type": "noauth"
+                },
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "API-KEY",
+                    "value": "API Key",
+                    "type": "text"
+                  }
+                ],
+                "url": {
+                  "raw": "{{domain}}/crm/chat/setting/:chat-id/operator/mark_as_done",
+                  "host": [
+                    "{{domain}}"
+                  ],
+                  "path": [
+                    "crm",
+                    "chat",
+                    "setting",
+                    ":chat-id",
+                    "operator",
+                    "mark_as_done"
+                  ],
+                  "variable": [
+                    {
+                      "key": "chat-id",
+                      "value": ""
+                    }
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Close Chat",
+              "request": {
+                "auth": {
+                  "type": "noauth"
+                },
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "API-KEY",
+                    "value": "API Key",
+                    "type": "text"
+                  }
+                ],
+                "url": {
+                  "raw": "{{domain}}/crm/chat/setting/:chat-id/operator/close_chat",
+                  "host": [
+                    "{{domain}}"
+                  ],
+                  "path": [
+                    "crm",
+                    "chat",
+                    "setting",
+                    ":chat-id",
+                    "operator",
+                    "close_chat"
+                  ],
+                  "variable": [
+                    {
+                      "key": "chat-id",
+                      "value": ""
+                    }
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Assign Chat",
+              "request": {
+                "auth": {
+                  "type": "noauth"
+                },
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "API-KEY",
+                    "value": "API Key",
+                    "type": "text"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n    \"email\":\"chat_operator_email\",\r\n    //true||false\r\n    \"pause_automation\":true\r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{domain}}/crm/chat/setting/:chat-id/operator/assign_chat",
+                  "host": [
+                    "{{domain}}"
+                  ],
+                  "path": [
+                    "crm",
+                    "chat",
+                    "setting",
+                    ":chat-id",
+                    "operator",
+                    "assign_chat"
+                  ],
+                  "variable": [
+                    {
+                      "key": "chat-id",
+                      "value": ""
+                    }
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "List All Custom Field For Chat",
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "API-KEY",
+                    "value": "API Key",
+                    "type": "text"
+                  }
+                ],
+                "url": {
+                  "raw": "{{domain}}/crm/chat/setting/:chat-id/custom-field",
+                  "host": [
+                    "{{domain}}"
+                  ],
+                  "path": [
+                    "crm",
+                    "chat",
+                    "setting",
+                    ":chat-id",
+                    "custom-field"
+                  ],
+                  "variable": [
+                    {
+                      "key": "chat-id",
+                      "value": null,
+                      "description": "Chat UID or Chat WABA Identifier"
+                    }
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Search Contact",
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "API-KEY",
+                    "value": "API Key",
+                    "type": "text"
+                  }
+                ],
+                "url": {
+                  "raw": "{{domain}}/crm/chat/search?search_field=cf_1&search_value=cf_value&condition=contains&fields=cf_1,cf_2,cf_3",
+                  "host": [
+                    "{{domain}}"
+                  ],
+                  "path": [
+                    "crm",
+                    "chat",
+                    "search"
+                  ],
+                  "query": [
+                    {
+                      "key": "search_field",
+                      "value": "cf_1",
+                      "description": "Custom Field ID"
+                    },
+                    {
+                      "key": "search_value",
+                      "value": "cf_value",
+                      "description": "Custom Field Value"
+                    },
+                    {
+                      "key": "condition",
+                      "value": "contains",
+                      "description": "Accepted Conditions : ['equal to','not equal to','start with','end with','is empty','is not empty','contains','does not contains','greater than','greater than or equal to','less than','less than or equal to','is null','is not null','exist','does not exist']"
+                    },
+                    {
+                      "key": "fields",
+                      "value": "cf_1,cf_2,cf_3",
+                      "description": "Custom field of contact (Enter Field IDs Comma Separated)"
+                    }
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Add/Update Custom Field In Chat",
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "API-KEY",
+                    "value": "API Key",
+                    "type": "text"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n    \"data\": [\r\n        {\r\n            \"id\": \"CUSTOM FIELD ID 1\",\r\n            \"value\": \"CUSTOM FIELD VALUE 1\"\r\n        },\r\n        {\r\n            \"id\": \"CUSTOM FIELD ID 2\",\r\n            \"value\": \"CUSTOM FIELD VALUE 2\"\r\n        }\r\n    ]\r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{domain}}/crm/chat/setting/:chat-id/custom-field",
+                  "host": [
+                    "{{domain}}"
+                  ],
+                  "path": [
+                    "crm",
+                    "chat",
+                    "setting",
+                    ":chat-id",
+                    "custom-field"
+                  ],
+                  "variable": [
+                    {
+                      "key": "chat-id",
+                      "value": null,
+                      "description": "Chat UID or Chat WABA Identifier"
+                    }
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Delete Custom Field From Chat",
+              "request": {
+                "method": "DELETE",
+                "header": [
+                  {
+                    "key": "API-KEY",
+                    "value": "API Key",
+                    "type": "text"
+                  }
+                ],
+                "url": {
+                  "raw": "{{domain}}/crm/chat/setting/:chat-id/custom-field/:id",
+                  "host": [
+                    "{{domain}}"
+                  ],
+                  "path": [
+                    "crm",
+                    "chat",
+                    "setting",
+                    ":chat-id",
+                    "custom-field",
+                    ":id"
+                  ],
+                  "variable": [
+                    {
+                      "key": "chat-id",
+                      "value": null,
+                      "description": "Chat UID or Chat WABA Identifier"
+                    },
+                    {
+                      "key": "id",
+                      "value": null,
+                      "description": "Custom Field ID"
+                    }
+                  ]
+                }
+              },
+              "response": []
+            }
+          ]
+        },
+        {
+          "name": "Team Members",
+          "item": [
+            {
+              "name": "List All Team Members",
+              "request": {
+                "auth": {
+                  "type": "apikey",
+                  "apikey": [
+                    {
+                      "key": "value",
+                      "value": "{{api_key}}",
+                      "type": "string"
+                    },
+                    {
+                      "key": "key",
+                      "value": "API-KEY",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{domain}}/crm/team",
+                  "host": [
+                    "{{domain}}"
+                  ],
+                  "path": [
+                    "crm",
+                    "team"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Get a Team Member",
+              "request": {
+                "auth": {
+                  "type": "apikey",
+                  "apikey": [
+                    {
+                      "key": "value",
+                      "value": "{{api_key}}",
+                      "type": "string"
+                    },
+                    {
+                      "key": "key",
+                      "value": "API-KEY",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{domain}}/crm/team/{{team_member_id}}",
+                  "host": [
+                    "{{domain}}"
+                  ],
+                  "path": [
+                    "crm",
+                    "team",
+                    "{{team_member_id}}"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Create Magic Link",
+              "request": {
+                "auth": {
+                  "type": "apikey",
+                  "apikey": [
+                    {
+                      "key": "value",
+                      "value": "{{api_key}}",
+                      "type": "string"
+                    },
+                    {
+                      "key": "key",
+                      "value": "API-KEY",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{domain}}/crm/team/{{team_member_id}}/login?expiry=20",
+                  "host": [
+                    "{{domain}}"
+                  ],
+                  "path": [
+                    "crm",
+                    "team",
+                    "{{team_member_id}}",
+                    "login"
+                  ],
+                  "query": [
+                    {
+                      "key": "expiry",
+                      "value": "20",
+                      "description": "Expiry in seconds"
+                    }
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Create Team Member",
+              "request": {
+                "auth": {
+                  "type": "apikey",
+                  "apikey": [
+                    {
+                      "key": "value",
+                      "value": "{{api_key}}",
+                      "type": "string"
+                    },
+                    {
+                      "key": "key",
+                      "value": "API-KEY",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "POST",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n    \"name\":\"<NAME>\",\r\n    \"email\":\"<EMAIL>\",\r\n    \"password\":\"<PASSWORD - Minimum 8 Characters>\",\r\n    \"role\":\"<ROLE ID>\"\r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{domain}}/crm/team",
+                  "host": [
+                    "{{domain}}"
+                  ],
+                  "path": [
+                    "crm",
+                    "team"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Update Team Member",
+              "request": {
+                "auth": {
+                  "type": "apikey",
+                  "apikey": [
+                    {
+                      "key": "value",
+                      "value": "{{api_key}}",
+                      "type": "string"
+                    },
+                    {
+                      "key": "key",
+                      "value": "API-KEY",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "PUT",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n    \"name\":\"<NAME>\",\r\n    \"password\":\"<PASSWORD - Minimum 8 Characters>\",\r\n    \"role\":\"<ROLE ID>\",\r\n    \"active\":true  //true||false\r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{domain}}/crm/team/{{team_member_id}}",
+                  "host": [
+                    "{{domain}}"
+                  ],
+                  "path": [
+                    "crm",
+                    "team",
+                    "{{team_member_id}}"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Delete Team Member",
+              "request": {
+                "auth": {
+                  "type": "apikey",
+                  "apikey": [
+                    {
+                      "key": "value",
+                      "value": "{{api_key}}",
+                      "type": "string"
+                    },
+                    {
+                      "key": "key",
+                      "value": "API-KEY",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "DELETE",
+                "header": [],
+                "url": {
+                  "raw": "{{domain}}/crm/team/{{team_member_id}}",
+                  "host": [
+                    "{{domain}}"
+                  ],
+                  "path": [
+                    "crm",
+                    "team",
+                    "{{team_member_id}}"
+                  ]
+                }
+              },
+              "response": []
+            }
+          ]
+        },
+        {
+          "name": "Roles & Permissions",
+          "item": [
+            {
+              "name": "List All Roles",
+              "request": {
+                "auth": {
+                  "type": "apikey",
+                  "apikey": [
+                    {
+                      "key": "value",
+                      "value": "{{api_key}}",
+                      "type": "string"
+                    },
+                    {
+                      "key": "key",
+                      "value": "API-KEY",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{domain}}/crm/roles",
+                  "host": [
+                    "{{domain}}"
+                  ],
+                  "path": [
+                    "crm",
+                    "roles"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Get Role",
+              "request": {
+                "auth": {
+                  "type": "apikey",
+                  "apikey": [
+                    {
+                      "key": "value",
+                      "value": "{{api_key}}",
+                      "type": "string"
+                    },
+                    {
+                      "key": "key",
+                      "value": "API-KEY",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{domain}}/crm/roles/{{role_id}}",
+                  "host": [
+                    "{{domain}}"
+                  ],
+                  "path": [
+                    "crm",
+                    "roles",
+                    "{{role_id}}"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Create Role",
+              "request": {
+                "auth": {
+                  "type": "apikey",
+                  "apikey": [
+                    {
+                      "key": "value",
+                      "value": "{{api_key}}",
+                      "type": "string"
+                    },
+                    {
+                      "key": "key",
+                      "value": "API-KEY",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "POST",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n    \"title\":\"<ROLE TITLE>\",\r\n    \"permissions\":[\"<PERMISSIONS>\"]\r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{domain}}/crm/roles",
+                  "host": [
+                    "{{domain}}"
+                  ],
+                  "path": [
+                    "crm",
+                    "roles"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Update Role",
+              "request": {
+                "auth": {
+                  "type": "apikey",
+                  "apikey": [
+                    {
+                      "key": "value",
+                      "value": "{{api_key}}",
+                      "type": "string"
+                    },
+                    {
+                      "key": "key",
+                      "value": "API-KEY",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "PUT",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n    \"title\":\"<ROLE TITLE>\",\r\n    \"permissions\":[\"<PERMISSIONS>\"]\r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{domain}}/crm/roles/{{role_id}}",
+                  "host": [
+                    "{{domain}}"
+                  ],
+                  "path": [
+                    "crm",
+                    "roles",
+                    "{{role_id}}"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Delete Role",
+              "request": {
+                "auth": {
+                  "type": "apikey",
+                  "apikey": [
+                    {
+                      "key": "value",
+                      "value": "{{api_key}}",
+                      "type": "string"
+                    },
+                    {
+                      "key": "key",
+                      "value": "API-KEY",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "DELETE",
+                "header": [],
+                "url": {
+                  "raw": "{{domain}}/crm/roles/{{role_id}}",
+                  "host": [
+                    "{{domain}}"
+                  ],
+                  "path": [
+                    "crm",
+                    "roles",
+                    "{{role_id}}"
+                  ]
+                }
+              },
+              "response": []
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "ISV Partner API",
+      "item": [
+        {
+          "name": "Panel User (Beta)",
+          "item": [
+            {
+              "name": "List All Panel Users (While Label Agency Only)",
+              "request": {
+                "auth": {
+                  "type": "basic",
+                  "basic": [
+                    {
+                      "key": "password",
+                      "value": "{{password}}",
+                      "type": "string"
+                    },
+                    {
+                      "key": "username",
+                      "value": "{{email}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "https://inboxapi.com.bot/agency/user",
+                  "protocol": "https",
+                  "host": [
+                    "inboxapi",
+                    "com",
+                    "bot"
+                  ],
+                  "path": [
+                    "agency",
+                    "user"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Create Users",
+              "request": {
+                "auth": {
+                  "type": "basic",
+                  "basic": [
+                    {
+                      "key": "password",
+                      "value": "{{password}}",
+                      "type": "string"
+                    },
+                    {
+                      "key": "username",
+                      "value": "{{email}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "POST",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n    // required parameter\r\n    \"email\":\"USER EMAIL\",\r\n    // optional parameters\r\n    \"name\":\"USER NAME\",\r\n    \"password\":\"ACCOUNT PASSWORD\",\r\n    \"verified\":false\r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{domain}}/agency/user",
+                  "host": [
+                    "{{domain}}"
+                  ],
+                  "path": [
+                    "agency",
+                    "user"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Update User Status (Activate/Deactivate)",
+              "request": {
+                "auth": {
+                  "type": "basic",
+                  "basic": [
+                    {
+                      "key": "password",
+                      "value": "{{password}}",
+                      "type": "string"
+                    },
+                    {
+                      "key": "username",
+                      "value": "{{email}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "POST",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n    \"email\":\"demo@com.bot\",\r\n    \"active\":true\r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{domain}}/agency/user/update/status",
+                  "host": [
+                    "{{domain}}"
+                  ],
+                  "path": [
+                    "agency",
+                    "user",
+                    "update",
+                    "status"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Generate Magic Link for Login",
+              "request": {
+                "auth": {
+                  "type": "basic",
+                  "basic": [
+                    {
+                      "key": "password",
+                      "value": "{{password}}",
+                      "type": "string"
+                    },
+                    {
+                      "key": "username",
+                      "value": "{{email}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "POST",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n    \"email\":\"example@user_email.com\",\r\n    \"expiry\":1 //expiry in minutes\r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "https://inboxapi.com.bot/agency/user/login",
+                  "protocol": "https",
+                  "host": [
+                    "inboxapi",
+                    "com",
+                    "bot"
+                  ],
+                  "path": [
+                    "agency",
+                    "user",
+                    "login"
+                  ]
+                }
+              },
+              "response": []
+            }
+          ]
+        },
+        {
+          "name": "Manage Subscription (Beta)",
+          "item": [
+            {
+              "name": "Redeem Code",
+              "request": {
+                "auth": {
+                  "type": "basic",
+                  "basic": [
+                    {
+                      "key": "password",
+                      "value": "{{password}}",
+                      "type": "string"
+                    },
+                    {
+                      "key": "username",
+                      "value": "{{email}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "POST",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n    //Mention user email to redeem user type code in user's account\r\n    //don't send this if code type is agency\r\n    \"email\":\"\",\r\n    //Code\r\n    \"code\":\"\",\r\n    //WABA IDs in case of renew subscription type code\r\n    \"waba\":[]\r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{domain}}/agency/code/redeem",
+                  "host": [
+                    "{{domain}}"
+                  ],
+                  "path": [
+                    "agency",
+                    "code",
+                    "redeem"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "List Subscription",
+              "request": {
+                "auth": {
+                  "type": "basic",
+                  "basic": [
+                    {
+                      "key": "password",
+                      "value": "{{password}}",
+                      "type": "string"
+                    },
+                    {
+                      "key": "username",
+                      "value": "{{email}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{domain}}/agency/subscription",
+                  "host": [
+                    "{{domain}}"
+                  ],
+                  "path": [
+                    "agency",
+                    "subscription"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "List Subscription Share",
+              "request": {
+                "auth": {
+                  "type": "basic",
+                  "basic": [
+                    {
+                      "key": "password",
+                      "value": "{{password}}",
+                      "type": "string"
+                    },
+                    {
+                      "key": "username",
+                      "value": "{{email}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{domain}}/agency/subscription/:product/:product_id",
+                  "host": [
+                    "{{domain}}"
+                  ],
+                  "path": [
+                    "agency",
+                    "subscription",
+                    ":product",
+                    ":product_id"
+                  ],
+                  "variable": [
+                    {
+                      "key": "product",
+                      "value": "Product Type",
+                      "description": "Accepted Values [waba, channel, team_member, contact]"
+                    },
+                    {
+                      "key": "product_id",
+                      "value": "ID of product"
+                    }
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Share Subscription",
+              "request": {
+                "auth": {
+                  "type": "basic",
+                  "basic": [
+                    {
+                      "key": "password",
+                      "value": "{{password}}",
+                      "type": "string"
+                    },
+                    {
+                      "key": "username",
+                      "value": "{{email}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "POST",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n    //user email\r\n    \"email\":\"EMAIL OF USER\",\r\n    //number of units you want to share, not applicable for waba\r\n    \"value\":1,\r\n    //accepted values:- \"revocable\",\"irrevocable\"\r\n    \"type\":\"SHARE TYPE\",\r\n    //time period in days, it applicable in revocable share only\r\n    //irrevocable share not require period \r\n    \"period\":30\r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{domain}}/agency/subscription/:product/:product_id",
+                  "host": [
+                    "{{domain}}"
+                  ],
+                  "path": [
+                    "agency",
+                    "subscription",
+                    ":product",
+                    ":product_id"
+                  ],
+                  "variable": [
+                    {
+                      "key": "product",
+                      "value": "Product Type",
+                      "description": "Accepted Values [waba, channel, team_member, contact]"
+                    },
+                    {
+                      "key": "product_id",
+                      "value": "ID of product"
+                    }
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Add Products In Existing Shared Subscription",
+              "request": {
+                "auth": {
+                  "type": "basic",
+                  "basic": [
+                    {
+                      "key": "password",
+                      "value": "{{password}}",
+                      "type": "string"
+                    },
+                    {
+                      "key": "username",
+                      "value": "{{email}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "PUT",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n    //this call is not applicable for waba product\r\n    \"id\":\"Shared Product ID\",\r\n    //number of units you want to add\r\n    \"value\":1\r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{domain}}/agency/subscription/:product/:product_id",
+                  "host": [
+                    "{{domain}}"
+                  ],
+                  "path": [
+                    "agency",
+                    "subscription",
+                    ":product",
+                    ":product_id"
+                  ],
+                  "variable": [
+                    {
+                      "key": "product",
+                      "value": "Product Type",
+                      "description": "Accepted Values [waba, channel, team_member, contact]"
+                    },
+                    {
+                      "key": "product_id",
+                      "value": "ID of product"
+                    }
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Revoke Share",
+              "request": {
+                "auth": {
+                  "type": "basic",
+                  "basic": [
+                    {
+                      "key": "password",
+                      "value": "{{password}}",
+                      "type": "string"
+                    },
+                    {
+                      "key": "username",
+                      "value": "{{email}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "DELETE",
+                "header": [],
+                "url": {
+                  "raw": "{{domain}}/agency/subscription/:product/:product_id/:shared_product_id",
+                  "host": [
+                    "{{domain}}"
+                  ],
+                  "path": [
+                    "agency",
+                    "subscription",
+                    ":product",
+                    ":product_id",
+                    ":shared_product_id"
+                  ],
+                  "variable": [
+                    {
+                      "key": "product",
+                      "value": "Product Type",
+                      "description": "Accepted Values [waba, channel, team_member, contact]"
+                    },
+                    {
+                      "key": "product_id",
+                      "value": "ID of product"
+                    },
+                    {
+                      "key": "shared_product_id",
+                      "value": null
+                    }
+                  ]
+                }
+              },
+              "response": []
+            }
+          ]
+        },
+        {
+          "name": "WABA Management",
+          "item": [
+            {
+              "name": "List All Agency WABA",
+              "request": {
+                "auth": {
+                  "type": "basic",
+                  "basic": [
+                    {
+                      "key": "password",
+                      "value": "{{password}}",
+                      "type": "string"
+                    },
+                    {
+                      "key": "username",
+                      "value": "{{email}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{domain}}/agency/waba?email=demoaccount@com.bot&page=1&rows=20",
+                  "host": [
+                    "{{domain}}"
+                  ],
+                  "path": [
+                    "agency",
+                    "waba"
+                  ],
+                  "query": [
+                    {
+                      "key": "email",
+                      "value": "demoaccount@com.bot",
+                      "description": "Shared WABA's User Email, Used to filter Shared WABA by User"
+                    },
+                    {
+                      "key": "page",
+                      "value": "1",
+                      "description": "Page"
+                    },
+                    {
+                      "key": "rows",
+                      "value": "20",
+                      "description": "Number of records in one call"
+                    }
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Get WABA Details",
+              "request": {
+                "auth": {
+                  "type": "basic",
+                  "basic": [
+                    {
+                      "key": "password",
+                      "value": "{{password}}",
+                      "type": "string"
+                    },
+                    {
+                      "key": "username",
+                      "value": "{{email}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{domain}}/agency/waba/:waba_id",
+                  "host": [
+                    "{{domain}}"
+                  ],
+                  "path": [
+                    "agency",
+                    "waba",
+                    ":waba_id"
+                  ],
+                  "variable": [
+                    {
+                      "key": "waba_id",
+                      "value": "64389aa8cb055b8af8b28bdc"
+                    }
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Get Agency Wallet Balance",
+              "request": {
+                "auth": {
+                  "type": "basic",
+                  "basic": [
+                    {
+                      "key": "password",
+                      "value": "{{password}}",
+                      "type": "string"
+                    },
+                    {
+                      "key": "username",
+                      "value": "{{email}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{domain}}/agency/wallet",
+                  "host": [
+                    "{{domain}}"
+                  ],
+                  "path": [
+                    "agency",
+                    "wallet"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Get Agency Wallet Log",
+              "request": {
+                "auth": {
+                  "type": "basic",
+                  "basic": [
+                    {
+                      "key": "password",
+                      "value": "{{password}}",
+                      "type": "string"
+                    },
+                    {
+                      "key": "username",
+                      "value": "{{email}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{domain}}/agency/wallet/log?page=1&rows=25",
+                  "host": [
+                    "{{domain}}"
+                  ],
+                  "path": [
+                    "agency",
+                    "wallet",
+                    "log"
+                  ],
+                  "query": [
+                    {
+                      "key": "page",
+                      "value": "1"
+                    },
+                    {
+                      "key": "rows",
+                      "value": "25"
+                    }
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Get WABA Balance Log",
+              "request": {
+                "auth": {
+                  "type": "basic",
+                  "basic": [
+                    {
+                      "key": "password",
+                      "value": "{{password}}",
+                      "type": "string"
+                    },
+                    {
+                      "key": "username",
+                      "value": "{{email}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{domain}}/agency/waba/:waba_id/log?page=1&rows=25",
+                  "host": [
+                    "{{domain}}"
+                  ],
+                  "path": [
+                    "agency",
+                    "waba",
+                    ":waba_id",
+                    "log"
+                  ],
+                  "query": [
+                    {
+                      "key": "page",
+                      "value": "1"
+                    },
+                    {
+                      "key": "rows",
+                      "value": "25"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "key": "waba_id",
+                      "value": null
+                    }
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Get WABA Conversation Billing Metrics",
+              "request": {
+                "auth": {
+                  "type": "basic",
+                  "basic": [
+                    {
+                      "key": "password",
+                      "value": "{{password}}",
+                      "type": "string"
+                    },
+                    {
+                      "key": "username",
+                      "value": "{{email}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{domain}}/agency/waba/:waba_id/conversation?start=1690789987&end=1690989188",
+                  "host": [
+                    "{{domain}}"
+                  ],
+                  "path": [
+                    "agency",
+                    "waba",
+                    ":waba_id",
+                    "conversation"
+                  ],
+                  "query": [
+                    {
+                      "key": "start",
+                      "value": "1690789987"
+                    },
+                    {
+                      "key": "end",
+                      "value": "1690989188"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "key": "waba_id",
+                      "value": null
+                    }
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Add WABA Balance",
+              "request": {
+                "auth": {
+                  "type": "basic",
+                  "basic": [
+                    {
+                      "key": "password",
+                      "value": "{{password}}",
+                      "type": "string"
+                    },
+                    {
+                      "key": "username",
+                      "value": "{{email}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "POST",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n    \"action\":\"add\",\r\n    \"balance\":10\r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{domain}}/agency/waba/:waba_id/balance",
+                  "host": [
+                    "{{domain}}"
+                  ],
+                  "path": [
+                    "agency",
+                    "waba",
+                    ":waba_id",
+                    "balance"
+                  ],
+                  "variable": [
+                    {
+                      "key": "waba_id",
+                      "value": null
+                    }
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Deduct WABA Balance",
+              "request": {
+                "auth": {
+                  "type": "basic",
+                  "basic": [
+                    {
+                      "key": "password",
+                      "value": "{{password}}",
+                      "type": "string"
+                    },
+                    {
+                      "key": "username",
+                      "value": "{{email}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "POST",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n    \"action\":\"deduct\",\r\n    \"balance\":10\r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{domain}}/agency/waba/:waba_id/balance",
+                  "host": [
+                    "{{domain}}"
+                  ],
+                  "path": [
+                    "agency",
+                    "waba",
+                    ":waba_id",
+                    "balance"
+                  ],
+                  "variable": [
+                    {
+                      "key": "waba_id",
+                      "value": null
+                    }
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Update WABA Billing Visibility",
+              "request": {
+                "auth": {
+                  "type": "basic",
+                  "basic": [
+                    {
+                      "key": "password",
+                      "value": "{{password}}",
+                      "type": "string"
+                    },
+                    {
+                      "key": "username",
+                      "value": "{{email}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "POST",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n    \"hide_billing\":true\r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{domain}}/agency/waba/:waba_id/billing",
+                  "host": [
+                    "{{domain}}"
+                  ],
+                  "path": [
+                    "agency",
+                    "waba",
+                    ":waba_id",
+                    "billing"
+                  ],
+                  "variable": [
+                    {
+                      "key": "waba_id",
+                      "value": null
+                    }
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Update Agency Margin in WABA",
+              "request": {
+                "auth": {
+                  "type": "basic",
+                  "basic": [
+                    {
+                      "key": "password",
+                      "value": "{{password}}",
+                      "type": "string"
+                    },
+                    {
+                      "key": "username",
+                      "value": "{{email}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "POST",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n    \"margin\":10\r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{domain}}/agency/waba/:waba_id/margin",
+                  "host": [
+                    "{{domain}}"
+                  ],
+                  "path": [
+                    "agency",
+                    "waba",
+                    ":waba_id",
+                    "margin"
+                  ],
+                  "variable": [
+                    {
+                      "key": "waba_id",
+                      "value": null
+                    }
+                  ]
+                }
+              },
+              "response": []
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Resumable Upload API",
+      "item": [
+        {
+          "name": "Create Session",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "url": {
+              "raw": "{{domain}}/media/{{api-version}}/{{waba_id}}/uploads?file_length={{file-length}}&file_type={{file-type}}&access_token={{api_key}}",
+              "host": [
+                "{{domain}}"
+              ],
+              "path": [
+                "media",
+                "{{api-version}}",
+                "{{waba_id}}",
+                "uploads"
+              ],
+              "query": [
+                {
+                  "key": "file_length",
+                  "value": "{{file-length}}",
+                  "description": "The file's size, in bytes"
+                },
+                {
+                  "key": "file_type",
+                  "value": "{{file-type}}",
+                  "description": "The file's MIME type. Valid values are: application/pdf, image/jpeg, image/jpg, image/png, and video/mp4"
+                },
+                {
+                  "key": "access_token",
+                  "value": "{{api_key}}"
+                }
+              ]
+            },
+            "description": "If you have initiated an upload session but it is taking longer than expected or has been interrupted, send a GET request and append your upload session ID. The API returns a file_offset value that you can use to resume the upload process from the point of interruption."
+          },
+          "response": []
+        },
+        {
+          "name": "Initiate Upload",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "OAuth {{api_key}}",
+                "type": "text"
+              },
+              {
+                "key": "file-offset",
+                "value": "{{file_offset}}",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "file",
+              "file": {
+                "src": "/C:/Users/AKSHAY/Downloads/1DudfNy.png"
+              }
+            },
+            "url": {
+              "raw": "{{domain}}/media/{{api-version}}/{{upload_session_id}}",
+              "host": [
+                "{{domain}}"
+              ],
+              "path": [
+                "media",
+                "{{api-version}}",
+                "{{upload_session_id}}"
+              ]
+            },
+            "description": "If you have initiated an upload session but it is taking longer than expected or has been interrupted, send a GET request and append your upload session ID. The API returns a file_offset value that you can use to resume the upload process from the point of interruption."
+          },
+          "response": []
+        },
+        {
+          "name": "Fetch Upload Session Details (Interruptions)",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{domain}}/media/{{api-version}}/{{upload_session_id}}&access_token={{api_key}}",
+              "host": [
+                "{{domain}}"
+              ],
+              "path": [
+                "media",
+                "{{api-version}}",
+                "{{upload_session_id}}&access_token={{api_key}}"
+              ]
+            },
+            "description": "If you have initiated an upload session but it is taking longer than expected or has been interrupted, send a GET request and append your upload session ID. The API returns a file_offset value that you can use to resume the upload process from the point of interruption."
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Resumable Upload API (Channel V2)",
+      "item": [
+        {
+          "name": "Create Session",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{channel_token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [],
+            "url": {
+              "raw": "{{domain}}/api/meta/{{api-version}}/uploads?file_length={{file-length}}&file_type={{file-type}}",
+              "host": [
+                "{{domain}}"
+              ],
+              "path": [
+                "api",
+                "meta",
+                "{{api-version}}",
+                "uploads"
+              ],
+              "query": [
+                {
+                  "key": "file_length",
+                  "value": "{{file-length}}",
+                  "description": "The file's size, in bytes"
+                },
+                {
+                  "key": "file_type",
+                  "value": "{{file-type}}",
+                  "description": "The file's MIME type. Valid values are: application/pdf, image/jpeg, image/jpg, image/png, and video/mp4"
+                }
+              ]
+            },
+            "description": "If you have initiated an upload session but it is taking longer than expected or has been interrupted, send a GET request and append your upload session ID. The API returns a file_offset value that you can use to resume the upload process from the point of interruption."
+          },
+          "response": []
+        },
+        {
+          "name": "Initiate Upload",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{channel_token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "OAuth {{api_key}}"
+              },
+              {
+                "key": "file-offset",
+                "value": "{{file_offset}}"
+              }
+            ],
+            "body": {
+              "mode": "file",
+              "file": {
+                "src": "/C:/Users/AKSHAY/Downloads/lw7noxbb.jpg"
+              }
+            },
+            "url": {
+              "raw": "{{domain}}/api/meta/{{api-version}}/uploads/{{upload_session_id}}",
+              "host": [
+                "{{domain}}"
+              ],
+              "path": [
+                "api",
+                "meta",
+                "{{api-version}}",
+                "uploads",
+                "{{upload_session_id}}"
+              ]
+            },
+            "description": "If you have initiated an upload session but it is taking longer than expected or has been interrupted, send a GET request and append your upload session ID. The API returns a file_offset value that you can use to resume the upload process from the point of interruption."
+          },
+          "response": []
+        },
+        {
+          "name": "Fetch Upload Session Details (Interruptions)",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{channel_token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{domain}}/api/meta/{{api-version}}/uploads/{{upload_session_id}}",
+              "host": [
+                "{{domain}}"
+              ],
+              "path": [
+                "api",
+                "meta",
+                "{{api-version}}",
+                "uploads",
+                "{{upload_session_id}}"
+              ]
+            },
+            "description": "If you have initiated an upload session but it is taking longer than expected or has been interrupted, send a GET request and append your upload session ID. The API returns a file_offset value that you can use to resume the upload process from the point of interruption."
+          },
+          "response": []
+        }
+      ]
+    }
+  ],
+  "event": [
+    {
+      "listen": "prerequest",
+      "script": {
+        "type": "text/javascript",
+        "exec": [
+          ""
+        ]
+      }
+    },
+    {
+      "listen": "test",
+      "script": {
+        "type": "text/javascript",
+        "exec": [
+          ""
+        ]
+      }
+    }
+  ],
+  "variable": [
+    {
+      "key": "api_key",
+      "value": "API Key",
+      "type": "string"
+    },
+    {
+      "key": "domain",
+      "value": "{{Domain}}",
+      "type": "string"
+    },
+    {
+      "key": "api-version",
+      "value": "{{api-version}}",
+      "type": "string"
+    },
+    {
+      "key": "upload_session_id",
+      "value": "{{upload_session_id}}",
+      "type": "string"
+    },
+    {
+      "key": "file_offset",
+      "value": "{{file_offset}}",
+      "type": "string"
+    },
+    {
+      "key": "file-type",
+      "value": "{{file-type}}"
+    },
+    {
+      "key": "waba_id",
+      "value": "{{waba_id}}",
+      "type": "string"
+    },
+    {
+      "key": "file-length",
+      "value": "{{file-length}}"
+    },
+    {
+      "key": "email",
+      "value": "{{email}}",
+      "type": "string"
+    },
+    {
+      "key": "password",
+      "value": "{{password}}",
+      "type": "string"
+    },
+    {
+      "key": "team_member_id",
+      "value": "{{team_member_id}}"
+    },
+    {
+      "key": "role_id",
+      "value": "{{role_id}}"
+    },
+    {
+      "key": "flow_id",
+      "value": "{{flow_id}}"
+    },
+    {
+      "key": "version",
+      "value": "v18.0"
+    },
+    {
+      "key": "template_id",
+      "value": "template_id"
+    },
+    {
+      "key": "template_name",
+      "value": "template_name"
+    },
+    {
+      "key": "channel_token",
+      "value": "{{channel_token}}"
+    }
+  ]
+}
