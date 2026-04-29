@@ -1,6 +1,7 @@
 ﻿using CRMIntegration.Services.CobMais;
 using CRMIntegration.Services.CobMais.DTOs.Requests;
 using EasyNetQ;
+using MassTransit;
 using MediatR;
 using Microsoft.Extensions.Logging;
 using System;
@@ -9,15 +10,13 @@ using System.Text;
 
 namespace CRMIntegration.Application.Features.Campaigns.Commands.TriggerCampaign
 {
-    public class TriggerCampaignCommandHandler(ICobMaisService cobMaisService, ILogger<TriggerCampaignCommandHandler> logger) // : IRequestHandler<TriggerCampaignCommand, bool>
+    public class TriggerCampaignCommandHandler(IPublishEndpoint publishEndpoint)  : IRequestHandler<TriggerCampaignCommand>
     {
-        //public async Task<bool> Handle(TriggerCampaignCommand request, CancellationToken cancellationToken)
-        //{
-        //    var getActionableContacts = new GetActionableContactsRequest(request.StartDate, request.EndDate);
+        public async Task Handle(TriggerCampaignCommand request, CancellationToken cancellationToken)
+        {
 
-        //    var contacts = await cobMaisService.GetActionableContactsAsync(getActionableContacts, cancellationToken);
-
-        //    var events = contacts.SelectMany(c => c.PhoneNumber.Select(p => new ));
-        //}
+            // TODO: add all the contacts and send the events
+            await publishEndpoint.Publish(request, cancellationToken);
+        }
     }
 }
