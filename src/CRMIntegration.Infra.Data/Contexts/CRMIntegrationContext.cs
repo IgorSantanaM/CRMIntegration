@@ -1,6 +1,7 @@
 ﻿using CRMIntegration.Domain.Campaings;
 using CRMIntegration.Domain.Clients;
 using CRMIntegration.Domain.Core.Events;
+using MassTransit;
 using Microsoft.EntityFrameworkCore;
 
 namespace CRMIntegration.Infra.Data.Contexts
@@ -13,9 +14,13 @@ namespace CRMIntegration.Infra.Data.Contexts
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Ignore<Event<Guid>>();
+            modelBuilder.Ignore<Domain.Core.Events.Event<Guid>>();
 
             modelBuilder.ApplyConfigurationsFromAssembly(typeof(CRMIntegrationContext).Assembly);
+
+            modelBuilder.AddInboxStateEntity();
+            modelBuilder.AddOutboxMessageEntity();
+            modelBuilder.AddOutboxStateEntity();
 
             base.OnModelCreating(modelBuilder);
         }
