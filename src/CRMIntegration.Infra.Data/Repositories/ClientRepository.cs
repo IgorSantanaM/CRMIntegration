@@ -1,13 +1,9 @@
 ﻿using CRMIntegration.Domain.Clients;
 using CRMIntegration.Domain.Clients.Common;
-using CRMIntegration.Domain.Clients.Filters;
 using CRMIntegration.Domain.Core.Model;
 using CRMIntegration.Infra.Data.Contexts;
 using CRMIntegration.Infra.Data.Extensions;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace CRMIntegration.Infra.Data.Repositories
 {
@@ -40,7 +36,7 @@ namespace CRMIntegration.Infra.Data.Repositories
 
         public Task<bool> ExistsWithCPFCNPJAsync(string cpfCnpj, Guid? excludeId = null, CancellationToken cancellationToken = default)
         {
-            return context.Clients.AsNoTracking().AnyAsync(c => c.CPFCNPJ.ToUpper() == cpfCnpj.ToUpper() 
+            return context.Clients.AsNoTracking().AnyAsync(c => c.CPFCNPJ.ToUpper() == cpfCnpj.ToUpper()
                         && (excludeId == null || c.Id != excludeId), cancellationToken);
         }
 
@@ -70,10 +66,10 @@ namespace CRMIntegration.Infra.Data.Repositories
             return context.Clients.AsNoTracking().FirstOrDefaultAsync(c => c.CPFCNPJ == cpfCnpj, cancellationToken);
         }
 
-        public Task<PagedResult<Client>> GetByCreatedDateRangeAsync(DateTime startDate, 
-            DateTime endDate, 
+        public Task<PagedResult<Client>> GetByCreatedDateRangeAsync(DateTime startDate,
+            DateTime endDate,
             int pageNumber,
-            int pageSize, 
+            int pageSize,
             CancellationToken cancellationToken = default)
         {
             return context.Clients.Where(c => c.DataCriacao >= startDate && c.DataCriacao <= endDate)
@@ -83,12 +79,12 @@ namespace CRMIntegration.Infra.Data.Repositories
 
         public Task<Client?> GetByEmailAsync(string email, CancellationToken cancellationToken = default)
         {
-            return context.Clients.AsNoTracking().FirstOrDefaultAsync(c => c.Email.ToUpper() == email.ToUpper(), cancellationToken);   
+            return context.Clients.AsNoTracking().FirstOrDefaultAsync(c => c.Email.ToUpper() == email.ToUpper(), cancellationToken);
         }
 
         public Task<Client?> GetByIdCobMaisAsync(int idCobMais, CancellationToken cancellationToken = default)
         {
-            return context.Clients.AsNoTracking().FirstOrDefaultAsync(c => c.IdCobMais == idCobMais, cancellationToken);   
+            return context.Clients.AsNoTracking().FirstOrDefaultAsync(c => c.IdCobMais == idCobMais, cancellationToken);
         }
 
         public Task<PagedResult<Client>> GetByIdsAsync(IEnumerable<Guid> ids, int pageNumber, int pageSize, CancellationToken cancellationToken = default)
@@ -113,10 +109,10 @@ namespace CRMIntegration.Infra.Data.Repositories
 
         public Task<PagedResult<Client>> GetNeedingResynchronizationAsync(int pageNumber, int pageSize, int daysToExpire = 30, CancellationToken cancellationToken = default)
         {
-           return context.Clients.Where(c => c.DataSincronizacaoVoll.HasValue 
-                        && c.DataSincronizacaoVoll.Value.AddDays(daysToExpire) < DateTime.UtcNow)
-                        .AsNoTracking()
-                        .ToPagedResultAsync(pageNumber, pageSize, cancellationToken);
+            return context.Clients.Where(c => c.DataSincronizacaoVoll.HasValue
+                         && c.DataSincronizacaoVoll.Value.AddDays(daysToExpire) < DateTime.UtcNow)
+                         .AsNoTracking()
+                         .ToPagedResultAsync(pageNumber, pageSize, cancellationToken);
         }
 
         public Task<PagedResult<Client>> GetNonActionableAsync(int pageNumber, int pageSize, CancellationToken cancellationToken = default)
@@ -126,7 +122,7 @@ namespace CRMIntegration.Infra.Data.Repositories
 
         public Task<PagedResult<Client>> GetNotRecentlyActionedAsync(int pageNumber, int pageSize, int days = 30, CancellationToken cancellationToken = default)
         {
-            return context.Clients.Where(c => c.DataUltimoAcionamento.HasValue 
+            return context.Clients.Where(c => c.DataUltimoAcionamento.HasValue
                         && c.DataUltimoAcionamento.Value.AddDays(days) < DateTime.UtcNow)
                         .AsNoTracking()
                         .ToPagedResultAsync(pageNumber, pageSize, cancellationToken);
@@ -171,10 +167,10 @@ namespace CRMIntegration.Infra.Data.Repositories
 
         public Task<PagedResult<Client>> GetRecentlyActionedAsync(int pageNumber, int pageSize, int days = 7, CancellationToken cancellationToken = default)
         {
-            return context.Clients.Where(c => c.DataUltimoAcionamento.HasValue 
+            return context.Clients.Where(c => c.DataUltimoAcionamento.HasValue
                         && c.DataUltimoAcionamento.Value.AddDays(days) >= DateTime.UtcNow)
-                        .AsNoTracking() 
-                        .ToPagedResultAsync(pageNumber, pageSize, cancellationToken); 
+                        .AsNoTracking()
+                        .ToPagedResultAsync(pageNumber, pageSize, cancellationToken);
         }
 
         public Task<ClientStatistics> GetStatisticsAsync(CancellationToken cancellationToken = default)
@@ -184,7 +180,7 @@ namespace CRMIntegration.Infra.Data.Repositories
 
         public Task<PagedResult<Client>> GetSynchronizedWithVollAsync(int pageNumber, int pageSize, CancellationToken cancellationToken = default)
         {
-            return context.Clients.Where(c => c.DataSincronizacaoVoll.HasValue).AsNoTracking().ToPagedResultAsync(pageNumber, pageSize, cancellationToken); 
+            return context.Clients.Where(c => c.DataSincronizacaoVoll.HasValue).AsNoTracking().ToPagedResultAsync(pageNumber, pageSize, cancellationToken);
         }
 
         public Task<PagedResult<Client>> SearchByNameAsync(string name, int pageNumber, int pageSize, CancellationToken cancellationToken = default)

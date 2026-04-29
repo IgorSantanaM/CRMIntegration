@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace CRMIntegration.Domain.Campaings.Enum
+﻿namespace CRMIntegration.Domain.Campaings.Enum
 {
     public enum MessageStatus
     {

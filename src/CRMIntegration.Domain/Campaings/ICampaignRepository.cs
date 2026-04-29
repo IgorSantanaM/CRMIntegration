@@ -1,8 +1,5 @@
 ﻿using CRMIntegration.Domain.Campaings.Common;
 using CRMIntegration.Domain.Campaings.Enum;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace CRMIntegration.Domain.Campaings
 {

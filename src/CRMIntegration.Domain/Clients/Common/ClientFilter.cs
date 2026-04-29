@@ -1,4 +1,4 @@
-﻿namespace CRMIntegration.Domain.Clients.Filters
+﻿namespace CRMIntegration.Domain.Clients.Common
 {
     public record ClientFilter(
         string? Name = null,

@@ -1,9 +1,5 @@
 ﻿using CRMIntegration.Domain.Clients.Common;
-using CRMIntegration.Domain.Clients.Filters;
 using CRMIntegration.Domain.Core.Model;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace CRMIntegration.Domain.Clients
 {
@@ -158,7 +154,7 @@ namespace CRMIntegration.Domain.Clients
         /// <param name="name">Name to search</param>
         /// <param name="cancellationToken">Cancellation token</param>
         /// <returns>Paged result of matching clients</returns>
-        Task<PagedResult<Client>> SearchByNameAsync(string name,int pageNumber, int pageSize, CancellationToken cancellationToken = default);
+        Task<PagedResult<Client>> SearchByNameAsync(string name, int pageNumber, int pageSize, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Get paginated list of clients

@@ -1,7 +1,4 @@
 ﻿using CRMIntegration.Domain.Core.Events;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace CRMIntegration.Domain.Core.Model
 {
@@ -9,7 +6,7 @@ namespace CRMIntegration.Domain.Core.Model
     {
         public TId? Id { get; protected set; }
         private readonly List<Event<TId>> _domainEvents = new();
-        public IReadOnlyCollection<Event<TId>> DomainEvents 
+        public IReadOnlyCollection<Event<TId>> DomainEvents
             => _domainEvents.AsReadOnly();
 
         public override bool Equals(object? obj)

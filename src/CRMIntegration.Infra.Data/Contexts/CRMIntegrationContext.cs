@@ -2,9 +2,6 @@
 using CRMIntegration.Domain.Clients;
 using CRMIntegration.Domain.Core.Events;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace CRMIntegration.Infra.Data.Contexts
 {
@@ -19,7 +16,7 @@ namespace CRMIntegration.Infra.Data.Contexts
             modelBuilder.Ignore<Event<Guid>>();
 
             modelBuilder.ApplyConfigurationsFromAssembly(typeof(CRMIntegrationContext).Assembly);
-            
+
             base.OnModelCreating(modelBuilder);
         }
     }
