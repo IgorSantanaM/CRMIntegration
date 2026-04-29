@@ -1,4 +1,5 @@
-﻿using CRMIntegration.Domain.Clients.Events;
+﻿using CRMIntegration.Domain.Clients.Enum;
+using CRMIntegration.Domain.Clients.Events;
 using CRMIntegration.Domain.Core.Exceptions;
 using CRMIntegration.Domain.Core.Model;
 using System.Text.RegularExpressions;
@@ -19,6 +20,7 @@ namespace CRMIntegration.Domain.Clients
         public DateTime? DataUltimoAcionamento { get; private set; }
         public DateTime? DataSincronizacaoVoll { get; private set; }
         public string? Email { get; private set; }
+        public int TipoContato { get; set; } = 802;
 
         private Client() { }
 
@@ -27,7 +29,8 @@ namespace CRMIntegration.Domain.Clients
             string whatsapp,
             string cpfCnpj,
             int? idTelefoneCobMais = null,
-            string? email = null)
+            string? email = null,
+            int tipoContato = 802)
         {
             ValidateIdCobMais(idCobMais);
             ValidateName(nome);
@@ -47,6 +50,7 @@ namespace CRMIntegration.Domain.Clients
             Acionavel = true;
             Ativo = true;
             DataCriacao = DateTime.UtcNow;
+            this.TipoContato = tipoContato;
 
             AddDomainEvent(new ClientCreatedEvent(
                 Id,
@@ -97,7 +101,7 @@ namespace CRMIntegration.Domain.Clients
         public void MarkAsNonActionable()
         {
             if (!Acionavel)
-                return; 
+                return;
 
             Acionavel = false;
 
@@ -112,7 +116,7 @@ namespace CRMIntegration.Domain.Clients
         public void MarkAsActionable()
         {
             if (Acionavel)
-                return; 
+                return;
 
             if (!Ativo)
                 throw new DomainException("Não é possível marcar como acionável um cliente inativo.");
@@ -306,7 +310,7 @@ namespace CRMIntegration.Domain.Clients
 
         private static bool ValidateCPF(string cpf)
         {
-            if (cpf.All(c => c == cpf[0])) return false; 
+            if (cpf.All(c => c == cpf[0])) return false;
 
             var multiplicador1 = new[] { 10, 9, 8, 7, 6, 5, 4, 3, 2 };
             var multiplicador2 = new[] { 11, 10, 9, 8, 7, 6, 5, 4, 3, 2 };
@@ -337,7 +341,7 @@ namespace CRMIntegration.Domain.Clients
 
         private static bool ValidateCNPJ(string cnpj)
         {
-            if (cnpj.All(c => c == cnpj[0])) return false; 
+            if (cnpj.All(c => c == cnpj[0])) return false;
 
             var multiplicador1 = new[] { 5, 4, 3, 2, 9, 8, 7, 6, 5, 4, 3, 2 };
             var multiplicador2 = new[] { 6, 5, 4, 3, 2, 9, 8, 7, 6, 5, 4, 3, 2 };

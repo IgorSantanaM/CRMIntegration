@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace CRMIntegration.Domain.Core.Events
+﻿namespace CRMIntegration.Domain.Core.Events
 {
     public abstract record Message<TId> where TId : notnull
     {

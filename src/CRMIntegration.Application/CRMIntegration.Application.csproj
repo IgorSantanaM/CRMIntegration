@@ -1,0 +1,21 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net10.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Folder Include="Features\Campaigns\Events\" />
+    <Folder Include="Features\Campaigns\DTOs\" />
+    <Folder Include="Features\Campaigns\Validators\" />
+    <Folder Include="Features\Campaigns\Queries\" />
+    <Folder Include="Features\Clients\Commands\" />
+    <Folder Include="Features\Clients\DTOs\" />
+    <Folder Include="Features\Clients\Events\" />
+    <Folder Include="Features\Clients\Queries\" />
+    <Folder Include="Features\Clients\Validators\" />
+  </ItemGroup>
+
+</Project>

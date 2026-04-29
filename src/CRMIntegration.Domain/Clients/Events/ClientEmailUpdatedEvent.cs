@@ -1,7 +1,4 @@
 ﻿using CRMIntegration.Domain.Core.Events;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace CRMIntegration.Domain.Clients.Events
 {

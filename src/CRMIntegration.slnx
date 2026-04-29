@@ -1,16 +1,23 @@
 <Solution>
   <Folder Name="/src/" />
   <Folder Name="/src/1-Presentation/" />
-  <Folder Name="/src/2-Application/" />
-  <Folder Name="/src/3-Domain/">
+  <Folder Name="/src/2-Application/">
+    <Project Path="CRMIntegration.Application/CRMIntegration.Application.csproj" Id="3aa822a9-f9e9-4646-9c7e-3da634827e86" />
+  </Folder>
+  <Folder Name="/src/3-Services/">
+    <Project Path="CRMIntegration.Services/CRMIntegration.Services.csproj" Id="83645050-21b9-461a-be92-d78d16ef8a35" />
+  </Folder>
+  <Folder Name="/src/4-Domain/">
     <Project Path="CRMIntegration.Domain.Core/CRMIntegration.Domain.Core.csproj" Id="42686d8c-9626-4a28-a766-23c007df19d2" />
     <Project Path="CRMIntegration.Domain/CRMIntegration.Domain.csproj" Id="4723e817-2c6a-43b0-9995-7607c0014178" />
   </Folder>
-  <Folder Name="/src/4-Infrastructure/" />
-  <Folder Name="/src/4-Infrastructure/4.1-Data/">
+  <Folder Name="/src/5-Infrastructure/" />
+  <Folder Name="/src/5-Infrastructure/5.1-Data/">
     <Project Path="CRMIntegration.Infra.Data/CRMIntegration.Infra.Data.csproj" Id="6f422066-5e81-47f0-b273-9ad4d23b2db3" />
   </Folder>
-  <Folder Name="/src/4-Infrastructure/4.2-Services/" />
-  <Folder Name="/src/4-Infrastructure/4.3-CrossCutting/" />
+  <Folder Name="/src/5-Infrastructure/5.2-Services/">
+    <Project Path="CRMIntegration.Infra.Services/CRMIntegration.Infra.Services.csproj" Id="9d7355a0-5cb9-4eb4-905e-510f4637ea1a" />
+  </Folder>
+  <Folder Name="/src/5-Infrastructure/5.3-CrossCutting/" />
   <Folder Name="/tests/" />
 </Solution>

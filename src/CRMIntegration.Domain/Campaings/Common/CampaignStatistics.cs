@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace CRMIntegration.Domain.Campaings.Common
+﻿namespace CRMIntegration.Domain.Campaings.Common
 {
     public record CampaignStatistics(int TotalCampaigns,
         int TotalContacts,
