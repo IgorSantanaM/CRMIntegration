@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace CRMIntegration.Infra.Data.Repositories
 {
-    public class CampaignRepository(CRMIntegrationContext context) : Repository<Campaign, Guid>(context!), ICampaignRepository
+    public class CampaignRepository(CRMIntegrationContext context) : Repository<Campaign, Guid>(context), ICampaignRepository
     {
         public Task AddRangeAsync(IEnumerable<CampaignMessage> messages, CancellationToken cancellationToken = default)
         {
@@ -168,7 +168,18 @@ namespace CRMIntegration.Infra.Data.Repositories
             throw new NotImplementedException();
         }
 
-        Task<CampaignMessage?> ICampaignRepository.GetByIdAsync(Guid id, CancellationToken cancellationToken)
+
+        public Task<CampaignMessage?> GetMessageByIdAsync(Guid id, CancellationToken cancellationToken = default)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<bool> ExistsForClientInCampaignAsync(Guid campaignId, int clientId, CancellationToken cancellationToken = default)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task AddMessageAsync(CampaignMessage campaignMessage, CancellationToken cancellationToken = default)
         {
             throw new NotImplementedException();
         }

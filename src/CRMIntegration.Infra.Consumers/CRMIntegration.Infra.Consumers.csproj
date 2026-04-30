@@ -7,12 +7,13 @@
   </PropertyGroup>
 
 	<ItemGroup>
-		<PackageReference Include="MassTransit" Version="9.0.1" />
+		<PackageReference Include="MassTransit" Version="9.1.0" />
 		<PackageReference Include="Polly" Version="8.6.6" />
 	</ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\CRMIntegration.Domain.Core\CRMIntegration.Domain.Core.csproj" />
     <ProjectReference Include="..\CRMIntegration.Domain\CRMIntegration.Domain.csproj" />
+    <ProjectReference Include="..\CRMIntegration.Infra.Services\CRMIntegration.Infra.Services.csproj" />
     <ProjectReference Include="..\CRMIntegration.Services\CRMIntegration.Services.csproj" />
     <ProjectReference Include="..\CRMIntegration.Application\CRMIntegration.Application.csproj" />
   </ItemGroup>

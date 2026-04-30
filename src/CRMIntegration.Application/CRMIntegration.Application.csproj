@@ -7,8 +7,8 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Features\Campaigns\Events\" />
     <Folder Include="Features\Campaigns\DTOs\" />
+    <Folder Include="Features\Campaigns\Events\" />
     <Folder Include="Features\Campaigns\Validators\" />
     <Folder Include="Features\Campaigns\Queries\" />
     <Folder Include="Features\Clients\Commands\" />
@@ -25,6 +25,8 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\CRMIntegration.Infra.Data\CRMIntegration.Infra.Data.csproj" />
+    <ProjectReference Include="..\CRMIntegration.Infra.Services\CRMIntegration.Infra.Services.csproj" />
     <ProjectReference Include="..\CRMIntegration.Services\CRMIntegration.Services.csproj" />
   </ItemGroup>
 
