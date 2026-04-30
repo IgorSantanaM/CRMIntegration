@@ -1,159 +1,132 @@
-﻿using CRMIntegration.Domain.Campaings;
+﻿using CRMIntegration.Application.Features.Campaigns.Commands.TriggerCampaign;
+using CRMIntegration.Domain.Campaings;
 using CRMIntegration.Domain.Clients;
+using CRMIntegration.Domain.Clients.Events;
 using CRMIntegration.Domain.Core.Data;
-using CRMIntegration.Domain.Core.Exceptions;
+using CRMIntegration.Infra.Services.Voll;
 using CRMIntegration.Services.CobMais;
 using CRMIntegration.Services.Voll;
+using CRMIntegration.Services.Voll.DTOs;
 using CRMIntegration.Services.Voll.DTOs.Requests;
-using CRMIntegration.Services.CobMais.DTOs.Requests;
 using MassTransit;
 using Microsoft.Extensions.Logging;
-using Polly;
-using System.Threading.Tasks;
-using System.Collections.Generic;
-using System.Linq;
-using System;
-using CRMIntegration.Application.Features.Campaigns.Commands.TriggerCampaign;
 
 namespace CRMIntegration.Infra.Consumers.Consumers
 {
-    public class TriggerCampaignConsumer : IConsumer<TriggerCampaignCommand>
+    public class TriggerCampaignConsumer(IVollService vollService,
+        ICobMaisService cobMaisService,
+        IClientRepository clientRepository,
+        ICampaignRepository campaignRepository,
+        IUnitOfwork unitOfWork,
+        VollOptions vollOptions,
+        ILogger<TriggerCampaignConsumer> logger
+        ) : IConsumer<SendContactMessageCommand>
     {
-        private readonly IVollService _vollService;
-        private readonly ICobMaisService _cobMaisService;
-        private readonly IUnitOfwork _unitOfWork;
-        private readonly IClientRepository _clientRepository;
-        private readonly ICampaignRepository _campaignRepository;
-        private readonly ILogger<TriggerCampaignConsumer> _logger;
-
-        public TriggerCampaignConsumer(
-            IVollService vollService,
-            ICobMaisService cobMaisService,
-            IUnitOfwork unitOfWork,
-            IClientRepository clientRepository,
-            ICampaignRepository campaignRepository,
-            ILogger<TriggerCampaignConsumer> logger)
+        public async Task Consume(ConsumeContext<SendContactMessageCommand> context)
         {
-            _vollService = vollService;
-            _cobMaisService = cobMaisService;
-            _unitOfWork = unitOfWork;
-            _clientRepository = clientRepository;
-            _campaignRepository = campaignRepository;
-            _logger = logger;
-        }
+            SendContactMessageCommand? cmd = context.Message;
 
-        public async Task Consume(ConsumeContext<TriggerCampaignCommand> context)
-        {
-            var command = context.Message;
-
-            _logger.LogInformation("Processing TriggerCampaignCommand ID: {MessageId} for Template: {TemplateName}", context.MessageId, command.TemplateName);
-
-            var cobMaisPolicy = Policy
-                .Handle<Exception>()
-                .WaitAndRetryAsync(
-                    retryCount: 3,
-                    sleepDurationProvider: retryAttempt => TimeSpan.FromSeconds(Math.Pow(2, retryAttempt)),
-                    onRetry: (exception, timeSpan, retryCount, ctx) =>
-                    {
-                        _logger.LogWarning(exception, "CobMais integration failed. Retry {RetryCount} after {Delay}s", retryCount, timeSpan.TotalSeconds);
-                    });
-
-            var contacts = await cobMaisPolicy.ExecuteAsync(() =>
-                _cobMaisService.GetActionableContactsAsync(new GetActionableContactsRequest(command.StartDate, command.EndDate, null, null), context.CancellationToken));
-
-            if (!contacts.Any())
+            if (cmd is null)
             {
-                _logger.LogInformation("No actionable contacts found for the given dates.");
+                logger.LogInformation("Received null message, ignoring.");
                 return;
             }
 
-            var targetContacts = contacts.Where(c => c.Codigo == "802" || c.Codigo == null).ToList();
-
-            if (!targetContacts.Any())
+            using var scope = logger.BeginScope(new Dictionary<string, object>
             {
-                _logger.LogInformation("No contacts passing the business rule (e.g. Type=802).");
-                return;
-            }
-
-            var campaign = new Campaign(
-                nome: $"Campaign_{command.TemplateName}_{DateTime.UtcNow.ToString("yyyyMMddHHmmss")}",
-                template: command.TemplateName,
-                channelIdVoll: "default_channel", // TODO: CHANNEL ID.
-                dataDisparo: DateTime.UtcNow,
-                totalContatos: targetContacts.Count
-            );
-
-            var eventTasks = targetContacts.Select(c =>
-            _cobMaisService.InsertCampaignDispatchEventAsync(
-                c.IdPessoa.ToString(), command.TemplateName, context.CancellationToken)
-            );
-
-            await Task.WhenAll(eventTasks);
-
-            var rateLimitPolicy = Policy.RateLimitAsync(80, TimeSpan.FromSeconds(1));
-
-            var sendPolicy = Policy
-                .Handle<Exception>()
-                .WaitAndRetryAsync(
-                    retryCount: 3,
-                    sleepDurationProvider: retryAttempt => TimeSpan.FromSeconds(2 * retryAttempt),
-                    onRetry: (exception, timeSpan, retryCount, ctx) =>
-                    {
-                        _logger.LogWarning(exception, $"Voll integration failed. Retry {retryCount} after {timeSpan.TotalSeconds}s");
-                    });
-
-            campaign.StartProcessing();
-
-            var sendTasks = targetContacts.Select(async contact =>
-            {
-                try
-                {
-                    await rateLimitPolicy.ExecuteAsync(async () =>
-                    {
-                        await sendPolicy.ExecuteAsync(async () =>
-                        {
-                            var sendMessageRequest = new SendTemplateMessageRequest
-                            (
-                                contact.PhoneNumber,
-                                new Services.Voll.DTOs.CampaignTemplateDto
-                                (
-                                    new Services.Voll.DTOs.CampaignTemplateLanguage("deterministic", "pt_BR"),
-                                    command.TemplateName,
-                                    new List<Services.Voll.DTOs.CampaignTemplateComponentDto>()
-                                ),
-                                "individual",
-                                "template",
-                                "0"
-                            );
-
-                            var response = await _vollService.SendTemplateMessageAsync(sendMessageRequest, context.CancellationToken);
-
-                            var client = await _clientRepository.GetByIdCobMaisAsync(contact.IdPessoa, context.CancellationToken);
-                            if (client is not null)
-                            {
-                                var message = new CampaignMessage(campaign.Id, client.Id);
-                                campaign.AddMessage(message);
-
-                                campaign.IncrementSent();
-                                campaign.IncrementDelivered();
-                            }
-                        });
-                    });
-                }
-                catch (Exception ex)
-                {
-                    _logger.LogError(ex, "Failed to send message to contact {Phone}", contact.PhoneNumber);
-                    campaign.IncrementFail();
-                }
+                ["CorrelationId"] = cmd.CorrelationId,
+                ["CampaignId"] = cmd.CampaignId,
+                ["PhoneNumber"] = cmd.PhoneNumber
             });
 
-            await Task.WhenAll(sendTasks);
+            var alreadySent = await campaignRepository.ExistsForClientInCampaignAsync(cmd.CampaignId,
+                cmd.IdPessoa,
+                context.CancellationToken);
 
-            await _campaignRepository.UpdateRangeAsync(campaign.Mensagens);
-            await _unitOfWork.SaveChangesAsync();
+            if (alreadySent)
+            {
+                logger.LogWarning($"Message for client {cmd.IdPessoa} in campaign {cmd.CampaignId} " +
+                    $"has already been sent, skipping.");
+                return;
+            }
 
-            _logger.LogInformation("Finished processing TriggerCampaignCommand ID: {MessageId}. Success: {Sent}, Failed: {Failed}", 
-                context.MessageId, campaign.TotalEnviados, campaign.TotalFalhas);
+            var client = await clientRepository.GetByIdCobMaisAsync(
+           cmd.IdPessoa, context.CancellationToken);
+
+            if (client is null)
+            {
+                client = new Client(
+                    cmd.IdPessoa, cmd.Nome, cmd.PhoneNumber, cmd.CpfCnpj,
+                    idTelefoneCobMais: cmd.IdPessoa);
+
+                var request = new CreateContactRequest(
+                    Whatsapp: cmd.PhoneNumber,
+                    ChatName: cmd.Nome,
+                    Email: null,
+                    ChatOperator: null,
+                    CustomFields:
+                    [
+                        new("cf_cobmais_id", cmd.IdPessoa.ToString()),
+                        new("cf_cpfcnpj", cmd.CpfCnpj)
+                    ]
+                );
+
+                var vollContactResponse = await vollService.CreateContactAsync(request, context.CancellationToken);
+
+                client.SynchronizeWithVoll(vollContactResponse.Id);
+                await clientRepository.AddAsync(client);
+            }
+            else if (!client.IsSynchronizedWithVoll())
+            {
+                CreateContactRequest request = new(cmd.PhoneNumber, cmd.Nome, null, null, [
+                        new("cf_cobmais_id", cmd.IdPessoa.ToString()),
+                        new("cf_cpfcnpj", cmd.CpfCnpj)
+                    ]);
+
+                var vollId = await vollService.GetOrCreateContactAsync(
+                    request,
+                    context.CancellationToken);
+                client.SynchronizeWithVoll(vollId);
+            }
+
+            var campaign = await campaignRepository.GetByIdAsync(cmd.CampaignId, context.CancellationToken);
+
+            if(campaign is null)
+            {
+                logger.LogError($"Campaign with id {cmd.CampaignId} not found, aborting."); 
+            }
+
+            var message = new CampaignMessage(
+                cmd.CampaignId,
+                client.Id);
+            await campaignRepository.AddMessageAsync(message, context.CancellationToken);
+            await unitOfWork.SaveChangesAsync(context.CancellationToken);
+
+            var sendResponse = await vollService.SendTemplateMessageAsync(
+            new SendTemplateMessageRequest(
+                cmd.PhoneNumber,
+                new CampaignTemplateDto(
+                    new CampaignTemplateLanguage("deterministic", "pt_BR"),
+                    cmd.TemplateName,
+                    []
+                ),
+                "individual",
+                "template",
+                null
+            ), context.CancellationToken);
+
+            message.MarkAsDelivered(sendResponse.MessageId);
+
+            client.MarkAsTriggered();
+            campaign!.IncrementSent();
+
+            if(client.IdTelefoneCobMais.HasValue)
+            {
+                await cobMaisService.MarkPhoneAsActionableAsync(client.IdTelefoneCobMais.Value, context.CancellationToken);
+                client.MarkAsNonActionable();
+            }
+
+            await unitOfWork.SaveChangesAsync(context.CancellationToken);
         }
     }
 }

@@ -1,6 +1,8 @@
 <Solution>
   <Folder Name="/src/" />
-  <Folder Name="/src/1-Presentation/" />
+  <Folder Name="/src/1-Presentation/">
+    <Project Path="CRMIntegration.Presentation.API/CRMIntegration.Presentation.API.csproj" Id="cc6369c9-9ece-4837-b125-01f4bab51aa4" />
+  </Folder>
   <Folder Name="/src/2-Application/">
     <Project Path="CRMIntegration.Application/CRMIntegration.Application.csproj" Id="3aa822a9-f9e9-4646-9c7e-3da634827e86" />
   </Folder>
@@ -21,6 +23,8 @@
   <Folder Name="/src/5-Infrastructure/5.3-Services/">
     <Project Path="CRMIntegration.Infra.Services/CRMIntegration.Infra.Services.csproj" Id="9d7355a0-5cb9-4eb4-905e-510f4637ea1a" />
   </Folder>
-  <Folder Name="/src/5-Infrastructure/5.4-CrossCutting/" />
+  <Folder Name="/src/5-Infrastructure/5.4-CrossCutting/">
+    <Project Path="CRMIntegration.Infra.CrossCutting/CRMIntegration.Infra.CrossCutting.csproj" Id="c777c9f3-3cbc-470d-a8a1-098053c78391" />
+  </Folder>
   <Folder Name="/tests/" />
 </Solution>

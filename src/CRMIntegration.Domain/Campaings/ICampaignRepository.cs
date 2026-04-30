@@ -1,12 +1,13 @@
 ﻿using CRMIntegration.Domain.Campaings.Common;
 using CRMIntegration.Domain.Campaings.Enum;
+using CRMIntegration.Domain.Core.Data;
 
 namespace CRMIntegration.Domain.Campaings
 {
     /// <summary>
     /// Repository interface for Campaign aggregate root
     /// </summary>
-    public interface ICampaignRepository
+    public interface ICampaignRepository : IRepository<Campaign, Guid>
     {
         /// <summary>
         /// Get a campaign by its Voll campaign ID
@@ -131,7 +132,7 @@ namespace CRMIntegration.Domain.Campaings
         /// <param name="id">Message ID</param>
         /// <param name="cancellationToken">Cancellation token</param>
         /// <returns>Message if found, null otherwise</returns>
-        Task<CampaignMessage?> GetByIdAsync(Guid id, CancellationToken cancellationToken = default);
+        Task<CampaignMessage?> GetMessageByIdAsync(Guid id, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Get a message by Voll message ID
@@ -260,7 +261,7 @@ namespace CRMIntegration.Domain.Campaings
         /// <returns>True if exists, false otherwise</returns>
         Task<bool> ExistsForClientInCampaignAsync(
             Guid campaignId,
-            Guid clientId,
+            int clientId,
             CancellationToken cancellationToken = default);
 
         /// <summary>
@@ -320,5 +321,12 @@ namespace CRMIntegration.Domain.Campaings
             Guid campaignId,
             MessageStatus status,
             CancellationToken cancellationToken = default);
+        /// <summary>
+        /// Created a campaign message
+        /// </summary>
+        /// <param name="campaignMessage">The campaign message entity</param>
+        /// <param name="cancellationToken">Cancellation token</param>
+        /// <returns></returns>
+        Task AddMessageAsync(CampaignMessage campaignMessage, CancellationToken cancellationToken = default);
     }
 }

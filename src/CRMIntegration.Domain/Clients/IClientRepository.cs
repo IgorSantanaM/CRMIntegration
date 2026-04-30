@@ -1,4 +1,6 @@
-﻿using CRMIntegration.Domain.Clients.Common;
+﻿using CRMIntegration.Domain.Campaings;
+using CRMIntegration.Domain.Clients.Common;
+using CRMIntegration.Domain.Core.Data;
 using CRMIntegration.Domain.Core.Model;
 
 namespace CRMIntegration.Domain.Clients
@@ -6,7 +8,7 @@ namespace CRMIntegration.Domain.Clients
     /// <summary>
     /// Repository interface for Client aggregate root
     /// </summary>
-    public interface IClientRepository
+    public interface IClientRepository : IRepository<Client, Guid>
     {
         /// <summary>
         /// Get a client by CobMais ID
