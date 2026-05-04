@@ -2,6 +2,7 @@ using CRMIntegration.Infra.CrossCutting;
 using CRMIntegration.Infra.Data.Contexts;
 using CRMIntegration.Presentation.API.Endpoints.Internal;
 using Microsoft.EntityFrameworkCore;
+using Scalar.AspNetCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -20,7 +21,7 @@ services.AddCors(opt =>
 services.AddOpenApi();
 
 services.RegisterApplication(builder.Configuration);
-services.RegisterServices();
+services.RegisterServices(builder.Configuration);
 services.RegisterInfrastructure(builder.Configuration);
 services.AddMassTransitConfiguration(builder.Configuration);
 
@@ -29,12 +30,11 @@ var app = builder.Build();
 if (app.Environment.IsDevelopment())
 {
     app.MapOpenApi();
+
+    app.MapScalarApiReference();
 }
 
 app.UseCors();
-
-app.UseAuthorization();
-app.UseAuthentication();
 
 app.UseEndpoints<Program>();
 
