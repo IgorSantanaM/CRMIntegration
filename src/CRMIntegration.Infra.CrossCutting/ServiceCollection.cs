@@ -1,6 +1,7 @@
 ﻿using CRMIntegration.Application.Features.Campaigns.Commands.TriggerCampaign;
 using CRMIntegration.Domain.Campaings;
 using CRMIntegration.Domain.Clients;
+using CRMIntegration.Domain.Core.Data;
 using CRMIntegration.Infra.Consumers.Consumers;
 using CRMIntegration.Infra.Data.Contexts;
 using CRMIntegration.Infra.Data.Interceptors;
@@ -32,11 +33,19 @@ namespace CRMIntegration.Infra.CrossCutting
             ]);
         }
 
-        public static void RegisterServices(this IServiceCollection services)
+        public static void RegisterServices(this IServiceCollection services, IConfiguration configuration)
         {
-            services.AddScoped<ICobMaisService, CobMaisService>();
+            services.AddHttpClient<IVollService, VollService>(client =>
+            {
+                client.BaseAddress = new Uri(configuration["Voll__Domain"] ?? throw new ArgumentNullException("Voll url not set!"));
 
-            services.AddScoped<IVollService, VollService>();
+                client.DefaultRequestHeaders.Add("Accept", "application/json");
+            });
+            services.AddHttpClient<ICobMaisService, CobMaisService>(client =>
+            {
+                client.BaseAddress = new Uri(configuration["CobMais__Domain"] ?? throw new ArgumentNullException("CobMais url not set!"));
+                client.DefaultRequestHeaders.Add("Accept", "application/json");
+            });
         }
 
         public static void RegisterInfrastructure(this IServiceCollection services, IConfiguration configuration)
@@ -47,7 +56,7 @@ namespace CRMIntegration.Infra.CrossCutting
             {
                 var interceptor = sp.GetRequiredService<PublishDomainEventsInterceptor>();
 
-                options.UseNpgsql(configuration.GetConnectionString("DottInDb"), npgsqlOptions =>
+                options.UseNpgsql(configuration.GetConnectionString("PostgreSQL"), npgsqlOptions =>
                 {
                     npgsqlOptions.EnableRetryOnFailure(
                         maxRetryCount: 3,
@@ -72,6 +81,7 @@ namespace CRMIntegration.Infra.CrossCutting
 
             services.AddScoped<ICampaignRepository, CampaignRepository>();
             services.AddScoped<IClientRepository, ClientRepository>();
+            services.AddScoped<IUnitOfwork, UnitOfWork>();
         }
 
         public static void AddMassTransitConfiguration(this IServiceCollection services, IConfiguration configuration)
@@ -91,11 +101,6 @@ namespace CRMIntegration.Infra.CrossCutting
                     o.QueryMessageLimit = 50;
 
                     o.DuplicateDetectionWindow = TimeSpan.FromMinutes(30);
-
-                    o.UseBusOutbox(bo =>
-                    {
-                        bo.MessageDeliveryLimit = 50;
-                    });
                 });
 
                 if (useInMemory)

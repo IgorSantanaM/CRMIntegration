@@ -1,7 +1,7 @@
 ﻿using CRMIntegration.Domain.Core.Data;
-using Microsoft.EntityFrameworkCore;
+using CRMIntegration.Infra.Data.Contexts;
 
-public class UnitOfWork(DbContext context) : IUnitOfwork, IAsyncDisposable, IDisposable
+public class UnitOfWork(CRMIntegrationContext context) : IUnitOfwork, IAsyncDisposable, IDisposable
 {
     private bool _disposed;
 
