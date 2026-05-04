@@ -6,7 +6,6 @@ using CRMIntegration.Services.CobMais;
 using MassTransit;
 using MediatR;
 using System.Threading.Channels;
-using static Microsoft.EntityFrameworkCore.DbLoggerCategory.Database;
 
 namespace CRMIntegration.Application.Features.Campaigns.Commands.TriggerCampaign
 {

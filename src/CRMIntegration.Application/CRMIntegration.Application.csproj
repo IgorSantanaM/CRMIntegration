@@ -7,7 +7,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Features\Campaigns\DTOs\" />
     <Folder Include="Features\Campaigns\Events\" />
     <Folder Include="Features\Campaigns\Validators\" />
     <Folder Include="Features\Campaigns\Queries\" />
@@ -22,6 +21,7 @@
     <PackageReference Include="EasyNetQ" Version="8.1.4" />
     <PackageReference Include="MassTransit" Version="9.1.0" />
     <PackageReference Include="MediatR" Version="13.0.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Http.Features" Version="5.0.17" />
   </ItemGroup>
 
   <ItemGroup>
