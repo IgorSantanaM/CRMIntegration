@@ -12,8 +12,7 @@ namespace CRMIntegration.Infra.Services.CobMais
 {
     public class CobMaisService : ICobMaisService
     {
-        private readonly HttpClient _consultaClient;
-        private readonly HttpClient _cobrancaClient;
+        private readonly HttpClient _httpClient;
         private readonly CobMaisOptions _options;
         private readonly ILogger<CobMaisService> _logger;
 
@@ -24,14 +23,13 @@ namespace CRMIntegration.Infra.Services.CobMais
         };
 
         public CobMaisService(
-            IHttpClientFactory httpClientFactory,
+            HttpClient httpClient,
             IOptions<CobMaisOptions> options,
             ILogger<CobMaisService> logger)
         {
             _options = options.Value;
             _logger = logger;
-            _consultaClient = httpClientFactory.CreateClient("CobMaisConsulta");
-            _cobrancaClient = httpClientFactory.CreateClient("CobMaisCobranca");
+            _httpClient = httpClient;
         }
 
         public async Task<IEnumerable<CobMaisClientResponse>> GetClientDataAsync(
@@ -49,7 +47,7 @@ namespace CRMIntegration.Infra.Services.CobMais
             _logger.LogInformation("[CobMais] Fetching client data. StartDate={StartDate} EndDate={EndDate}",
                 request.StartDate, request.EndDate);
 
-            var response = await _consultaClient
+            var response = await _httpClient
                 .PostAsJsonAsync("/clientes/dados_cadastrais", body, _jsonOptions, cancellationToken);
 
             await EnsureSuccessAsync(response, "GET_CLIENT_DATA");
@@ -118,7 +116,7 @@ namespace CRMIntegration.Infra.Services.CobMais
 
             _logger.LogDebug("[CobMais] Fetching phones for client {ChaveCliente}.", chaveCliente);
 
-            var response = await _cobrancaClient
+            var response = await _httpClient
                 .GetAsync($"/clientes/{chaveCliente}/telefones", cancellationToken);
 
             await EnsureSuccessAsync(response, "GET_CLIENT_PHONES");
@@ -154,7 +152,7 @@ namespace CRMIntegration.Infra.Services.CobMais
             _logger.LogDebug("[CobMais] Updating phone {PhoneId}. Contato={Contato}.",
                 request.Id, request.Contato);
 
-            var response = await _cobrancaClient
+            var response = await _httpClient
                 .PutAsJsonAsync("/clientes/telefones", body, _jsonOptions, cancellationToken);
 
             await EnsureSuccessAsync(response, "UPDATE_PHONE");
@@ -265,7 +263,7 @@ namespace CRMIntegration.Infra.Services.CobMais
                 "[CobMais] Inserting event '{TipoEvento}' for client {CodigoCliente}.",
                 request.TipoEvento, request.CodigoCliente);
 
-            var response = await _cobrancaClient
+            var response = await _httpClient
                 .PostAsJsonAsync("/eventos", body, _jsonOptions, cancellationToken);
 
             await EnsureSuccessAsync(response, "INSERT_EVENT");
