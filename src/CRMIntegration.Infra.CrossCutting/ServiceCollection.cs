@@ -3,6 +3,7 @@ using CRMIntegration.Domain.Campaings;
 using CRMIntegration.Domain.Clients;
 using CRMIntegration.Domain.Core.Data;
 using CRMIntegration.Infra.Consumers.Consumers;
+using CRMIntegration.Infra.Consumers.Definitions;
 using CRMIntegration.Infra.Data.Contexts;
 using CRMIntegration.Infra.Data.Interceptors;
 using CRMIntegration.Infra.Data.Repositories;
@@ -90,7 +91,7 @@ namespace CRMIntegration.Infra.CrossCutting
 
             services.AddMassTransit(cfg =>
             {
-                cfg.AddConsumer<TriggerCampaignConsumer>();
+                cfg.AddConsumer<TriggerCampaignConsumer, TriggerCampaignConsumerDefinition>();
 
                 cfg.AddEntityFrameworkOutbox<CRMIntegrationContext>(o =>
                 {

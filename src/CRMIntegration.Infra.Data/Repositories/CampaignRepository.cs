@@ -183,5 +183,11 @@ namespace CRMIntegration.Infra.Data.Repositories
         {
             throw new NotImplementedException();
         }
+
+        public Task IncrementSentCountAsync(Guid campaignId, CancellationToken cancellationToken = default)
+        {
+            return _context.Set<Campaign>().Where(c => c.Id == campaignId)
+                .ExecuteUpdateAsync(s => s.SetProperty(c => c.TotalEnviados, c => c.TotalEnviados + 1), cancellationToken);
+        }
     }
 }
