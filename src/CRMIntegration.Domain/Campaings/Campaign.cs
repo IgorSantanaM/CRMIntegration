@@ -139,12 +139,6 @@ namespace CRMIntegration.Domain.Campaings
             VerifyFinalization();
         }
 
-        public void IncrementSent()
-        {
-            TotalEnviados++;
-            VerifyFinalization();
-        }
-
         public void IncrementDelivered()
         {
             TotalEntregues++;

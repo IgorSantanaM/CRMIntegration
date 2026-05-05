@@ -11,7 +11,6 @@ using MassTransit;
 using MediatR;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
-using System.Threading.Channels;
 
 namespace CRMIntegration.Application.Features.Campaigns.Commands.TriggerCampaignFromCsv
 {
@@ -100,77 +99,26 @@ namespace CRMIntegration.Application.Features.Campaigns.Commands.TriggerCampaign
             campaign.StartProcessing();
 
             await campaignRepository.AddAsync(campaign);
-            await unitOfWork.SaveChangesAsync(cancellationToken);
 
             logger.LogInformation(
                 "[Campaign] Created {CampaignId} with {Total} contacts.",
                 campaign.Id, finalContacts.Count);
 
-            var publishChannel = Channel.CreateBounded<SendContactMessageCommand>(
-                new BoundedChannelOptions(1000)
-                {
-                    FullMode = BoundedChannelFullMode.Wait,
-                    SingleWriter = false,
-                    SingleReader = false
-                });
-
-            var producer = Task.Run(async () =>
+            foreach (var (csv, cobMais) in finalContacts)
             {
-                foreach (var (csv, cobMais) in finalContacts)
-                {
-                    await publishChannel.Writer.WriteAsync(
-                        new SendContactMessageCommand(
-                            CampaignId: campaign.Id,
-                            CorrelationId: Guid.NewGuid(),
-                            IdPessoa: cobMais.IdPessoa,
-                            CpfCnpj: cobMais.CpfCnpj,
-                            Nome: cobMais.Nome,
-                            PhoneNumber: cobMais.PhoneNumber,
-                            PhoneId: cobMais.PhoneId,
-                            TemplateName: request.TemplateName
-                        ), cancellationToken);
-                }
-
-                publishChannel.Writer.Complete();
-            }, cancellationToken);
-
-            var semaphore = new SemaphoreSlim(80);
-
-            var consumer = Task.Run(async () =>
-            {
-                var publishTasks = new List<Task>();
-
-                await foreach (var msg in publishChannel.Reader.ReadAllAsync(cancellationToken))
-                {
-                    await semaphore.WaitAsync(cancellationToken);
-
-                    publishTasks.Add(Task.Run(async () =>
-                    {
-                        try
-                        {
-                            await publishEndpoint.Publish(msg, cancellationToken);
-                        }
-                        catch (Exception ex)
-                        {
-                            logger.LogError(ex,
-                                "[Publish] Failed to publish message for CPF={Cpf}",
-                                msg.CpfCnpj);
-                        }
-                        finally
-                        {
-                            _ = Task.Delay(TimeSpan.FromSeconds(1), cancellationToken)
-                                    .ContinueWith(_ => semaphore.Release(),
-                                        TaskContinuationOptions.ExecuteSynchronously);
-                        }
-                    }, cancellationToken));
-
-                    publishTasks.RemoveAll(t => t.IsCompleted);
-                }
-
-                await Task.WhenAll(publishTasks);
-            }, cancellationToken);
-
-            await Task.WhenAll(producer, consumer);
+                await publishEndpoint.Publish<SendContactMessageCommand>(
+                    new SendContactMessageCommand(
+                        CampaignId: campaign.Id,
+                        CorrelationId: Guid.NewGuid(),
+                        IdPessoa: cobMais.IdPessoa,
+                        CpfCnpj: cobMais.CpfCnpj,
+                        Nome: cobMais.Nome,
+                        PhoneNumber: cobMais.PhoneNumber,
+                        PhoneId: cobMais.PhoneId,
+                        TemplateName: request.TemplateName
+                    ), cancellationToken);
+            }
+            await unitOfWork.SaveChangesAsync(cancellationToken);
 
             logger.LogInformation(
                 "[Campaign] All {Count} messages published. CampaignId={CampaignId}",

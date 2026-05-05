@@ -328,5 +328,14 @@ namespace CRMIntegration.Domain.Campaings
         /// <param name="cancellationToken">Cancellation token</param>
         /// <returns></returns>
         Task AddMessageAsync(CampaignMessage campaignMessage, CancellationToken cancellationToken = default);
+        
+        /// <summary>
+        /// Increment the sent count for a campaign
+        /// </summary>
+        /// <param name="campaignId">Campaign ID</param>
+        /// <param name="cancellationToken">Cancellation token</param>
+        /// <returns></returns>
+        Task IncrementSentCountAsync(Guid campaignId, CancellationToken cancellationToken = default);
+    
     }
 }

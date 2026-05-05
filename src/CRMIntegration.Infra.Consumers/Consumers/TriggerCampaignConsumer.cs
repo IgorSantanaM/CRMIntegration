@@ -1,7 +1,6 @@
 ﻿using CRMIntegration.Application.Features.Campaigns.Commands.TriggerCampaign;
 using CRMIntegration.Domain.Campaings;
 using CRMIntegration.Domain.Clients;
-using CRMIntegration.Domain.Clients.Events;
 using CRMIntegration.Domain.Core.Data;
 using CRMIntegration.Infra.Services.Voll;
 using CRMIntegration.Services.CobMais;
@@ -18,7 +17,6 @@ namespace CRMIntegration.Infra.Consumers.Consumers
         IClientRepository clientRepository,
         ICampaignRepository campaignRepository,
         IUnitOfwork unitOfWork,
-        VollOptions vollOptions,
         ILogger<TriggerCampaignConsumer> logger
         ) : IConsumer<SendContactMessageCommand>
     {
@@ -91,16 +89,16 @@ namespace CRMIntegration.Infra.Consumers.Consumers
 
             var campaign = await campaignRepository.GetByIdAsync(cmd.CampaignId, context.CancellationToken);
 
-            if(campaign is null)
+            if (campaign is null)
             {
-                logger.LogError($"Campaign with id {cmd.CampaignId} not found, aborting."); 
+                logger.LogError($"Campaign with id {cmd.CampaignId} not found, aborting.");
+                return;
             }
 
             var message = new CampaignMessage(
                 cmd.CampaignId,
                 client.Id);
             await campaignRepository.AddMessageAsync(message, context.CancellationToken);
-            await unitOfWork.SaveChangesAsync(context.CancellationToken);
 
             var sendResponse = await vollService.SendTemplateMessageAsync(
             new SendTemplateMessageRequest(
@@ -118,11 +116,11 @@ namespace CRMIntegration.Infra.Consumers.Consumers
             message.MarkAsDelivered(sendResponse.MessageId);
 
             client.MarkAsTriggered();
-            campaign!.IncrementSent();
+            await campaignRepository.IncrementSentCountAsync(campaign.Id, context.CancellationToken);
 
-            if(client.IdTelefoneCobMais.HasValue)
+            if (client.IdTelefoneCobMais.HasValue)
             {
-                await cobMaisService.MarkPhoneAsActionableAsync(client.IdTelefoneCobMais.Value, context.CancellationToken);
+                await cobMaisService.MarkPhoneAsNonActionableAsync(client.IdTelefoneCobMais.Value, context.CancellationToken);
                 client.MarkAsNonActionable();
             }
 
