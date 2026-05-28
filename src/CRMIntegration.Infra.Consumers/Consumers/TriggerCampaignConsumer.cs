@@ -2,7 +2,6 @@
 using CRMIntegration.Domain.Campaings;
 using CRMIntegration.Domain.Clients;
 using CRMIntegration.Domain.Core.Data;
-using CRMIntegration.Infra.Services.Voll;
 using CRMIntegration.Services.CobMais;
 using CRMIntegration.Services.Voll;
 using CRMIntegration.Services.Voll.DTOs;

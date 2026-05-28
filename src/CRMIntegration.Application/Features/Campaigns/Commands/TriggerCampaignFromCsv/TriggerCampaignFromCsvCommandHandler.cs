@@ -18,6 +18,7 @@ namespace CRMIntegration.Application.Features.Campaigns.Commands.TriggerCampaign
          IPublishEndpoint publishEndpoint,
          ICobMaisService cobMaisService,
          ICampaignRepository campaignRepository,
+         CRMIntegration.Services.Voll.IVollService vollService,
          IUnitOfwork unitOfWork,
          VollOptions vollOptions,
          ILogger<TriggerCampaignFromCsvCommandHandler> logger)
@@ -103,6 +104,37 @@ namespace CRMIntegration.Application.Features.Campaigns.Commands.TriggerCampaign
             logger.LogInformation(
                 "[Campaign] Created {CampaignId} with {Total} contacts.",
                 campaign.Id, finalContacts.Count);
+
+            var receivers = finalContacts.Select(c => new CRMIntegration.Services.Voll.DTOs.CampaignReceiverDto(
+                c.CobMais.PhoneNumber,
+                new Dictionary<string, string>
+                {
+                    ["name"] = c.CobMais.Nome
+                }
+            )).ToList();
+
+            var vollCampaign = await vollService.CreateBulkCampaignAsync(
+                new CRMIntegration.Services.Voll.DTOs.Requests.BulkCampaignRequest(
+                    campaign.Nome,
+                    vollOptions.ChannelId,
+                    null,
+                    receivers,
+                    [ new CRMIntegration.Services.Voll.DTOs.CampaignMessageDto(
+                        new CRMIntegration.Services.Voll.DTOs.CampaignTemplateDto(
+                            new CRMIntegration.Services.Voll.DTOs.CampaignTemplateLanguage("deterministic", "pt_BR"),
+                            request.TemplateName, [])) ]
+                ), cancellationToken);
+
+            campaign.MarkAsSent(vollCampaign.Id);
+
+            var phoneIds = finalContacts
+                .Where(c => c.CobMais.PhoneId > 0)
+                .Select(c => c.CobMais.PhoneId);
+
+            if (phoneIds.Any())
+            {
+                await cobMaisService.MarkPhonesAsNonActionableBatchAsync(phoneIds, cancellationToken);
+            }
 
             foreach (var (csv, cobMais) in finalContacts)
             {
