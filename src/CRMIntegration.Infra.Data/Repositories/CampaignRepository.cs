@@ -161,16 +161,16 @@ namespace CRMIntegration.Infra.Data.Repositories
                 .ToListAsync(cancellationToken);
         }
 
-        public async Task<Campaign?> GetByVollCampaignIdAsync(string idCampanhaVoll, CancellationToken cancellationToken = default)
+        public async Task<Campaign?> GetByBemChatCampaignIdAsync(string idCampanhaBemChat, CancellationToken cancellationToken = default)
         {
             return await context.Campaigns.AsNoTracking()
-                .FirstOrDefaultAsync(c => c.IdCampanhaVoll == idCampanhaVoll, cancellationToken);
+                .FirstOrDefaultAsync(c => c.IdCampanhaBemChat == idCampanhaBemChat, cancellationToken);
         }
 
-        public async Task<CampaignMessage?> GetByVollMessageIdAsync(string idMensagemVoll, CancellationToken cancellationToken = default)
+        public async Task<CampaignMessage?> GetByBemChatMessageIdAsync(string idMensagemBemChat, CancellationToken cancellationToken = default)
         {
             return await context.CampaignMessages.AsNoTracking()
-                .FirstOrDefaultAsync(cm => cm.IdMensagemVoll == idMensagemVoll, cancellationToken);
+                .FirstOrDefaultAsync(cm => cm.IdMensagemBemChat == idMensagemBemChat, cancellationToken);
         }
 
         public async Task<IEnumerable<CampaignMessage>> GetDeliveredButNotReadAsync(int hoursDelivered = 24, CancellationToken cancellationToken = default)

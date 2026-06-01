@@ -16,7 +16,7 @@ namespace CRMIntegration.Infra.Data.Mappings
             builder.Property(x => x.Id)
                 .ValueGeneratedNever();
 
-            builder.Property(x => x.IdVoll)
+            builder.Property(x => x.IdBemChat)
                 .HasMaxLength(100);
 
             builder.Property(x => x.IdCobMais)
@@ -47,7 +47,7 @@ namespace CRMIntegration.Infra.Data.Mappings
 
             builder.Property(x => x.DataUltimoAcionamento);
 
-            builder.Property(x => x.DataSincronizacaoVoll);
+            builder.Property(x => x.DataSincronizacaoBemChat);
 
             builder.Property(x => x.Email)
                 .HasMaxLength(100);
@@ -55,7 +55,7 @@ namespace CRMIntegration.Infra.Data.Mappings
             builder.HasIndex(x => x.IdCobMais)
                 .IsUnique();
 
-            builder.HasIndex(x => x.IdVoll)
+            builder.HasIndex(x => x.IdBemChat)
                 .IsUnique();
         }
     }

@@ -17,13 +17,13 @@ namespace CRMIntegration.Infra.Data.Migrations
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uuid", nullable: false),
-                    IdCampanhaVoll = table.Column<string>(type: "character varying(100)", maxLength: 100, nullable: false),
+                    IdCampanhaBemChat = table.Column<string>(type: "character varying(100)", maxLength: 100, nullable: false),
                     Nome = table.Column<string>(type: "character varying(200)", maxLength: 200, nullable: false),
                     Template = table.Column<string>(type: "character varying(100)", maxLength: 100, nullable: false),
                     DataDisparo = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
                     Status = table.Column<int>(type: "integer", nullable: false),
                     TotalContatos = table.Column<int>(type: "integer", nullable: false),
-                    ChannelIdVoll = table.Column<string>(type: "character varying(100)", maxLength: 100, nullable: false),
+                    ChannelIdBemChat = table.Column<string>(type: "character varying(100)", maxLength: 100, nullable: false),
                     DataCriacao = table.Column<DateTime>(type: "timestamp with time zone", nullable: true),
                     DataFinalizacao = table.Column<DateTime>(type: "timestamp with time zone", nullable: true),
                     TotalEnviados = table.Column<int>(type: "integer", nullable: false),
@@ -41,7 +41,7 @@ namespace CRMIntegration.Infra.Data.Migrations
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uuid", nullable: false),
-                    IdVoll = table.Column<string>(type: "character varying(100)", maxLength: 100, nullable: false),
+                    IdBemChat = table.Column<string>(type: "character varying(100)", maxLength: 100, nullable: false),
                     IdCobMais = table.Column<int>(type: "integer", nullable: false),
                     Nome = table.Column<string>(type: "character varying(200)", maxLength: 200, nullable: false),
                     Whatsapp = table.Column<string>(type: "character varying(13)", maxLength: 13, nullable: false),
@@ -51,7 +51,7 @@ namespace CRMIntegration.Infra.Data.Migrations
                     Ativo = table.Column<bool>(type: "boolean", nullable: false),
                     DataCriacao = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
                     DataUltimoAcionamento = table.Column<DateTime>(type: "timestamp with time zone", nullable: true),
-                    DataSincronizacaoVoll = table.Column<DateTime>(type: "timestamp with time zone", nullable: true),
+                    DataSincronizacaoBemChat = table.Column<DateTime>(type: "timestamp with time zone", nullable: true),
                     Email = table.Column<string>(type: "character varying(100)", maxLength: 100, nullable: true),
                     TipoContato = table.Column<int>(type: "integer", nullable: false)
                 },
@@ -106,7 +106,7 @@ namespace CRMIntegration.Infra.Data.Migrations
                     Id = table.Column<Guid>(type: "uuid", nullable: false),
                     CampaignId = table.Column<Guid>(type: "uuid", nullable: false),
                     ClientId = table.Column<Guid>(type: "uuid", nullable: false),
-                    IdMensagemVoll = table.Column<string>(type: "character varying(100)", maxLength: 100, nullable: false),
+                    IdMensagemBemChat = table.Column<string>(type: "character varying(100)", maxLength: 100, nullable: false),
                     Status = table.Column<int>(type: "integer", nullable: false),
                     DataEnvio = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
                     DataEntrega = table.Column<DateTime>(type: "timestamp with time zone", nullable: true),
@@ -186,21 +186,21 @@ namespace CRMIntegration.Infra.Data.Migrations
                 column: "ClientId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Campaigns_IdCampanhaVoll",
+                name: "IX_Campaigns_IdCampanhaBemChat",
                 table: "Campaigns",
-                column: "IdCampanhaVoll",
+                column: "IdCampanhaBemChat",
+                unique: true);
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Clients_IdBemChat",
+                table: "Clients",
+                column: "IdBemChat",
                 unique: true);
 
             migrationBuilder.CreateIndex(
                 name: "IX_Clients_IdCobMais",
                 table: "Clients",
                 column: "IdCobMais",
-                unique: true);
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Clients_IdVoll",
-                table: "Clients",
-                column: "IdVoll",
                 unique: true);
 
             migrationBuilder.CreateIndex(

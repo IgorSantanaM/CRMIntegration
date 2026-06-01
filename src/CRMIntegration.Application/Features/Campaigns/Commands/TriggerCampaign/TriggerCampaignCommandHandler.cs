@@ -1,23 +1,24 @@
 ﻿using CRMIntegration.Domain.Campaings;
 using CRMIntegration.Domain.Core.Data;
 using CRMIntegration.Domain.Core.Exceptions;
-using CRMIntegration.Infra.Services.Voll;
+using CRMIntegration.Infra.Services.BemChat;
 using CRMIntegration.Services.CobMais;
 using MassTransit;
 using MediatR;
 
 namespace CRMIntegration.Application.Features.Campaigns.Commands.TriggerCampaign
 {
-    public class TriggerCampaignCommandHandler(IPublishEndpoint publishEndpoint,
+    public class TriggerCampaignCommandHandler(
+        IPublishEndpoint publishEndpoint,
         ICobMaisService cobMaisService,
         ICampaignRepository campaignRepository,
         IUnitOfwork unitOfWork,
-        VollOptions vollOptions) : IRequestHandler<TriggerCampaignCommand>
+        BemChatOptions bemChatOptions) : IRequestHandler<TriggerCampaignCommand>
     {
         public async Task Handle(TriggerCampaignCommand request, CancellationToken cancellationToken)
         {
             var exists = await campaignRepository.ExistsWithNameTodayAsync(
-            request.TemplateName, cancellationToken);
+                request.TemplateName, cancellationToken);
 
             if (exists)
                 throw new DomainException("Campaign already triggered today for this template.");
@@ -30,7 +31,7 @@ namespace CRMIntegration.Application.Features.Campaigns.Commands.TriggerCampaign
             var campaign = new Campaign(
                 nome: $"Campaign_{request.TemplateName}_{DateTime.UtcNow:yyyyMMddHHmmss}",
                 template: request.TemplateName,
-                channelIdVoll: vollOptions.ChannelId,
+                channelIdBemChat: bemChatOptions.DefaultWhatsAppId?.ToString() ?? "default",
                 dataDisparo: DateTime.UtcNow,
                 totalContatos: filtered.Count
             );

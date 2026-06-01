@@ -12,7 +12,7 @@ namespace CRMIntegration.Domain.Campaings
         public Campaign Campaign { get; private set; }
         public Guid ClientId { get; private set; }
         public Client Client { get; private set; }
-        public string IdMensagemVoll { get; private set; } = string.Empty;
+        public string IdMensagemBemChat { get; private set; } = string.Empty;
         public MessageStatus Status { get; private set; } = MessageStatus.Sent;
         public DateTime DataEnvio { get; private set; }
         public DateTime? DataEntrega { get; private set; }
@@ -45,7 +45,7 @@ namespace CRMIntegration.Domain.Campaings
             ));
         }
 
-        public void MarkAsDelivered(string idMensagemVoll, string? webhookPayload = null)
+        public void MarkAsDelivered(string idMensagemBemChat, string? webhookPayload = null)
         {
             if (Status == MessageStatus.Failed)
                 throw new DomainException("Não é possível marcar como entregue uma mensagem que falhou.");
@@ -53,10 +53,10 @@ namespace CRMIntegration.Domain.Campaings
             if (Status == MessageStatus.Delivered || Status == MessageStatus.Read)
                 throw new DomainException($"A mensagem já está com status '{Status}'.");
 
-            if (string.IsNullOrWhiteSpace(idMensagemVoll))
-                throw new DomainException("O ID da mensagem Voll é obrigatório.");
+            if (string.IsNullOrWhiteSpace(idMensagemBemChat))
+                throw new DomainException("O ID da mensagem BemChat é obrigatório.");
 
-            IdMensagemVoll = idMensagemVoll;
+            IdMensagemBemChat = idMensagemBemChat;
             Status = MessageStatus.Delivered;
             DataEntrega = DateTime.UtcNow;
             WebhookPayload = webhookPayload;
@@ -65,7 +65,7 @@ namespace CRMIntegration.Domain.Campaings
                 Id,
                 CampaignId,
                 ClientId,
-                idMensagemVoll,
+                idMensagemBemChat,
                 DataEntrega.Value
             ));
         }

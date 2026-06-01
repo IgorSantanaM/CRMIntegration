@@ -8,7 +8,7 @@ namespace CRMIntegration.Domain.Clients
 {
     public class Client : Entity<Guid>, IAggregateRoot
     {
-        public string IdVoll { get; private set; } = string.Empty;
+        public string IdBemChat { get; private set; } = string.Empty;
         public int IdCobMais { get; private set; }
         public string Nome { get; private set; } = string.Empty;
         public string Whatsapp { get; private set; } = string.Empty;
@@ -18,7 +18,7 @@ namespace CRMIntegration.Domain.Clients
         public bool Ativo { get; private set; } = true;
         public DateTime DataCriacao { get; private set; }
         public DateTime? DataUltimoAcionamento { get; private set; }
-        public DateTime? DataSincronizacaoVoll { get; private set; }
+        public DateTime? DataSincronizacaoBemChat { get; private set; }
         public string? Email { get; private set; }
         public int TipoContato { get; set; } = 802;
 
@@ -61,22 +61,22 @@ namespace CRMIntegration.Domain.Clients
             ));
         }
 
-        public void SynchronizeWithVoll(string idVoll)
+        public void SynchronizeWithBemChat(string idBemChat)
         {
-            if (string.IsNullOrWhiteSpace(idVoll))
-                throw new DomainException("O ID da Voll é obrigatório.");
+            if (string.IsNullOrWhiteSpace(idBemChat))
+                throw new DomainException("O ID da BemChat é obrigatório.");
 
-            if (!string.IsNullOrEmpty(IdVoll) && IdVoll != idVoll)
-                throw new DomainException("Este cliente já está sincronizado com outro ID na Voll.");
+            if (!string.IsNullOrEmpty(IdBemChat) && IdBemChat != idBemChat)
+                throw new DomainException("Este cliente já está sincronizado com outro ID na BemChat.");
 
-            IdVoll = idVoll;
-            DataSincronizacaoVoll = DateTime.UtcNow;
+            IdBemChat = idBemChat;
+            DataSincronizacaoBemChat = DateTime.UtcNow;
 
-            AddDomainEvent(new ClientSynchronizedVollEvent(
+            AddDomainEvent(new ClientSynchronizedBemChatEvent(
                 Id,
                 IdCobMais,
-                idVoll,
-                DataSincronizacaoVoll.Value
+                idBemChat,
+                DataSincronizacaoBemChat.Value
             ));
         }
 
@@ -214,8 +214,8 @@ namespace CRMIntegration.Domain.Clients
 
             if (whatsappAnterior != Whatsapp)
             {
-                IdVoll = string.Empty;
-                DataSincronizacaoVoll = null;
+                IdBemChat = string.Empty;
+                DataSincronizacaoBemChat = null;
 
                 AddDomainEvent(new ClientWhatsAppUpdatedEvent(
                     Id,
@@ -228,7 +228,7 @@ namespace CRMIntegration.Domain.Clients
 
         public bool CanBeActionable() => Acionavel && Ativo;
 
-        public bool IsSynchronizedWithVoll() => !string.IsNullOrEmpty(IdVoll);
+        public bool IsSynchronizedWithBemChat() => !string.IsNullOrEmpty(IdBemChat);
 
         public TimeSpan? TimeSinceLastAction() =>
             DataUltimoAcionamento.HasValue
@@ -239,9 +239,9 @@ namespace CRMIntegration.Domain.Clients
             DataUltimoAcionamento.HasValue &&
             DateTime.UtcNow - DataUltimoAcionamento.Value <= TimeSpan.FromDays(daysToConsiderRecent);
 
-        public bool NeedsResynchronizationWithVoll(int daysToExpire = 30) =>
-            !DataSincronizacaoVoll.HasValue ||
-            DateTime.UtcNow - DataSincronizacaoVoll.Value > TimeSpan.FromDays(daysToExpire);
+        public bool NeedsResynchronizationWithBemChat(int daysToExpire = 30) =>
+            !DataSincronizacaoBemChat.HasValue ||
+            DateTime.UtcNow - DataSincronizacaoBemChat.Value > TimeSpan.FromDays(daysToExpire);
 
         #region Validations
         private static void ValidateIdCobMais(int id)

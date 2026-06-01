@@ -7,13 +7,13 @@ namespace CRMIntegration.Domain.Campaings
 {
     public class Campaign : Entity<Guid>, IAggregateRoot
     {
-        public string IdCampanhaVoll { get; private set; } = string.Empty;
+        public string IdCampanhaBemChat { get; private set; } = string.Empty;
         public string Nome { get; private set; } = string.Empty;
         public string Template { get; private set; } = string.Empty;
         public DateTime DataDisparo { get; private set; }
         public CampaignStatus Status { get; private set; } = default;
         public int TotalContatos { get; private set; } = 0;
-        public string ChannelIdVoll { get; private set; } = string.Empty;
+        public string ChannelIdBemChat { get; private set; } = string.Empty;
         public DateTime? DataCriacao { get; private set; }
         public DateTime? DataFinalizacao { get; private set; }
         public int TotalEnviados { get; private set; } = 0;
@@ -29,20 +29,20 @@ namespace CRMIntegration.Domain.Campaings
 
         public Campaign(string nome,
             string template,
-            string channelIdVoll,
+            string channelIdBemChat,
             DateTime dataDisparo,
             int totalContatos)
         {
             ValidateName(nome);
             ValidateTemplate(template);
-            ValidateChannelId(channelIdVoll);
+            ValidateChannelId(channelIdBemChat);
             ValidateTotalContacts(totalContatos);
             ValidateSendDate(dataDisparo);
 
             Id = Guid.NewGuid();
             Nome = nome;
             Template = template;
-            ChannelIdVoll = channelIdVoll;
+            ChannelIdBemChat = channelIdBemChat;
             DataDisparo = dataDisparo;
             TotalContatos = totalContatos;
             Status = CampaignStatus.Created;
@@ -67,20 +67,20 @@ namespace CRMIntegration.Domain.Campaings
             AddDomainEvent(new CampaignProcessingStartedEvent(Id, DateTime.UtcNow));
         }
 
-        public void MarkAsSent(string idCampanhaVoll)
+        public void MarkAsSent(string idCampanhaBemChat)
         {
             if (Status != CampaignStatus.Processing)
                 throw new DomainException($"Não é possível marcar como enviada uma campanha com status '{Status}'.");
 
-            if (string.IsNullOrWhiteSpace(idCampanhaVoll))
-                throw new DomainException("O ID da campanha Voll é obrigatório.");
+            if (string.IsNullOrWhiteSpace(idCampanhaBemChat))
+                throw new DomainException("O ID da campanha BemChat é obrigatório.");
 
-            IdCampanhaVoll = idCampanhaVoll;
+            IdCampanhaBemChat = idCampanhaBemChat;
             Status = CampaignStatus.Sent;
 
             AddDomainEvent(new CampaignSentEvent(
                 Id,
-                IdCampanhaVoll,
+                IdCampanhaBemChat,
                 TotalContatos,
                 DateTime.UtcNow
             ));
@@ -286,7 +286,7 @@ namespace CRMIntegration.Domain.Campaings
         private static void ValidateChannelId(string channelId)
         {
             if (string.IsNullOrWhiteSpace(channelId))
-                throw new DomainException("O Channel ID da Voll é obrigatório.");
+                throw new DomainException("O Channel ID da BemChat é obrigatório.");
         }
 
         private static void ValidateTotalContacts(int total)

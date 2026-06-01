@@ -2,8 +2,8 @@
 
 namespace CRMIntegration.Domain.Clients.Events
 {
-    public record ClientSynchronizedVollEvent(Guid Id,
+    public record ClientSynchronizedBemChatEvent(Guid Id,
         int IdCobMais,
-        string IdVoll,
+        string IdBemChat,
         DateTime DataSincronizacaoVoll) : Event<Guid>(Id);
 }
