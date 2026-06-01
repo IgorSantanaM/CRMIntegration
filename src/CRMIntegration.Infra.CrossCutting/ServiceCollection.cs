@@ -7,10 +7,10 @@ using CRMIntegration.Infra.Consumers.Definitions;
 using CRMIntegration.Infra.Data.Contexts;
 using CRMIntegration.Infra.Data.Interceptors;
 using CRMIntegration.Infra.Data.Repositories;
+using CRMIntegration.Infra.Services.BemChat;
 using CRMIntegration.Infra.Services.CobMais;
-using CRMIntegration.Infra.Services.Voll;
+using CRMIntegration.Services.BemChat;
 using CRMIntegration.Services.CobMais;
-using CRMIntegration.Services.Voll;
 using FluentValidation;
 using MassTransit;
 using Microsoft.EntityFrameworkCore;
@@ -36,15 +36,17 @@ namespace CRMIntegration.Infra.CrossCutting
 
         public static void RegisterServices(this IServiceCollection services, IConfiguration configuration)
         {
-            services.AddHttpClient<IVollService, VollService>(client =>
+            services.AddHttpClient<IBemChatService, BemChatService>(client =>
             {
-                client.BaseAddress = new Uri(configuration["Voll__Domain"] ?? throw new ArgumentNullException("Voll url not set!"));
+                client.BaseAddress = new Uri(configuration["BemChatOptions__Domain"]
+                    ?? throw new ArgumentNullException("BemChat url not set!"));
 
                 client.DefaultRequestHeaders.Add("Accept", "application/json");
             });
             services.AddHttpClient<ICobMaisService, CobMaisService>(client =>
             {
-                client.BaseAddress = new Uri(configuration["CobMais__Domain"] ?? throw new ArgumentNullException("CobMais url not set!"));
+                client.BaseAddress = new Uri(configuration["CobMais__Domain"]
+                    ?? throw new ArgumentNullException("CobMais url not set!"));
                 client.DefaultRequestHeaders.Add("Accept", "application/json");
             });
         }
@@ -70,10 +72,10 @@ namespace CRMIntegration.Infra.CrossCutting
                 options.AddInterceptors(interceptor);
             });
 
-            VollOptions vollOptions = new();
+            BemChatOptions bemChatOptions = new();
 
-            configuration.GetSection("VollOptions").Bind(vollOptions);
-            services.AddSingleton(vollOptions);
+            configuration.GetSection("BemChatOptions").Bind(bemChatOptions);
+            services.AddSingleton(bemChatOptions);
 
             CobMaisOptions cobMaisOptions = new();
 

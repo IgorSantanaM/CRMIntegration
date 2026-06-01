@@ -22,7 +22,7 @@ namespace CRMIntegration.Infra.Data.Mappings
             builder.Property(x => x.ClientId)
                 .IsRequired();
 
-            builder.Property(x => x.IdMensagemVoll)
+            builder.Property(x => x.IdMensagemBemChat)
                 .HasMaxLength(100);
 
             builder.Property(x => x.Status)

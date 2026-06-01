@@ -92,9 +92,9 @@ namespace CRMIntegration.Infra.Data.Repositories
             return context.Clients.Where(c => ids.Contains(c.Id)).AsNoTracking().ToPagedResultAsync(pageNumber, pageSize, cancellationToken);
         }
 
-        public Task<Client?> GetByIdVollAsync(string idVoll, CancellationToken cancellationToken = default)
+        public Task<Client?> GetByIdBemChatAsync(string idBemChat, CancellationToken cancellationToken = default)
         {
-            return context.Clients.AsNoTracking().FirstOrDefaultAsync(c => c.IdVoll == idVoll, cancellationToken);
+            return context.Clients.AsNoTracking().FirstOrDefaultAsync(c => c.IdBemChat == idBemChat, cancellationToken);
         }
 
         public Task<Client?> GetByWhatsAppAsync(string whatsapp, CancellationToken cancellationToken = default)
@@ -109,8 +109,8 @@ namespace CRMIntegration.Infra.Data.Repositories
 
         public Task<PagedResult<Client>> GetNeedingResynchronizationAsync(int pageNumber, int pageSize, int daysToExpire = 30, CancellationToken cancellationToken = default)
         {
-            return context.Clients.Where(c => c.DataSincronizacaoVoll.HasValue
-                         && c.DataSincronizacaoVoll.Value.AddDays(daysToExpire) < DateTime.UtcNow)
+            return context.Clients.Where(c => c.DataSincronizacaoBemChat.HasValue
+                         && c.DataSincronizacaoBemChat.Value.AddDays(daysToExpire) < DateTime.UtcNow)
                          .AsNoTracking()
                          .ToPagedResultAsync(pageNumber, pageSize, cancellationToken);
         }
@@ -128,9 +128,9 @@ namespace CRMIntegration.Infra.Data.Repositories
                         .ToPagedResultAsync(pageNumber, pageSize, cancellationToken);
         }
 
-        public Task<PagedResult<Client>> GetNotSynchronizedWithVollAsync(int pageNumber, int pageSize, CancellationToken cancellationToken = default)
+        public Task<PagedResult<Client>> GetNotSynchronizedWithBemChatAsync(int pageNumber, int pageSize, CancellationToken cancellationToken = default)
         {
-            return context.Clients.Where(c => !c.DataSincronizacaoVoll.HasValue).AsNoTracking().ToPagedResultAsync(pageNumber, pageSize, cancellationToken);
+            return context.Clients.Where(c => !c.DataSincronizacaoBemChat.HasValue).AsNoTracking().ToPagedResultAsync(pageNumber, pageSize, cancellationToken);
         }
 
         public Task<PagedResult<Client>> GetPaginatedAsync(int pageNumber, int pageSize, CancellationToken cancellationToken = default)
@@ -178,9 +178,9 @@ namespace CRMIntegration.Infra.Data.Repositories
             return context.Clients.AsNoTracking().ToClientStatisticsAsync(cancellationToken);
         }
 
-        public Task<PagedResult<Client>> GetSynchronizedWithVollAsync(int pageNumber, int pageSize, CancellationToken cancellationToken = default)
+        public Task<PagedResult<Client>> GetSynchronizedWithBemChatAsync(int pageNumber, int pageSize, CancellationToken cancellationToken = default)
         {
-            return context.Clients.Where(c => c.DataSincronizacaoVoll.HasValue).AsNoTracking().ToPagedResultAsync(pageNumber, pageSize, cancellationToken);
+            return context.Clients.Where(c => c.DataSincronizacaoBemChat.HasValue).AsNoTracking().ToPagedResultAsync(pageNumber, pageSize, cancellationToken);
         }
 
         public Task<PagedResult<Client>> SearchByNameAsync(string name, int pageNumber, int pageSize, CancellationToken cancellationToken = default)

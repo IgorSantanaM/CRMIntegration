@@ -16,7 +16,7 @@ namespace CRMIntegration.Infra.Data.Mappings
             builder.Property(x => x.Id)
                 .ValueGeneratedNever();
 
-            builder.Property(x => x.IdCampanhaVoll)
+            builder.Property(x => x.IdCampanhaBemChat)
                 .HasMaxLength(100);
 
             builder.Property(x => x.Nome)
@@ -27,7 +27,7 @@ namespace CRMIntegration.Infra.Data.Mappings
                 .IsRequired()
                 .HasMaxLength(100);
 
-            builder.Property(x => x.ChannelIdVoll)
+            builder.Property(x => x.ChannelIdBemChat)
                 .IsRequired()
                 .HasMaxLength(100);
 
@@ -60,7 +60,7 @@ namespace CRMIntegration.Infra.Data.Mappings
                 .WithOne(x => x.Campaign)
                 .HasForeignKey(x => x.CampaignId);
 
-            builder.HasIndex(x => x.IdCampanhaVoll)
+            builder.HasIndex(x => x.IdCampanhaBemChat)
                 .IsUnique();
         }
     }

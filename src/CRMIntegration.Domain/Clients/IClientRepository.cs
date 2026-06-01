@@ -19,12 +19,12 @@ namespace CRMIntegration.Domain.Clients
         Task<Client?> GetByIdCobMaisAsync(int idCobMais, CancellationToken cancellationToken = default);
 
         /// <summary>
-        /// Get a client by Voll ID
+        /// Get a client by BemChat ID
         /// </summary>
-        /// <param name="idVoll">Voll client ID</param>
+        /// <param name="idBemChat">BemChat client ID</param>
         /// <param name="cancellationToken">Cancellation token</param>
         /// <returns>Client if found, null otherwise</returns>
-        Task<Client?> GetByIdVollAsync(string idVoll, CancellationToken cancellationToken = default);
+        Task<Client?> GetByIdBemChatAsync(string idBemChat, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Get a client by WhatsApp number
@@ -73,21 +73,21 @@ namespace CRMIntegration.Domain.Clients
         Task<PagedResult<Client>> GetReadyForCampaignAsync(int pageNumber, int pageSize, CancellationToken cancellationToken = default);
 
         /// <summary>
-        /// Get clients synchronized with Voll
+        /// Get clients synchronized with BemChat
         /// </summary>
         /// <param name="cancellationToken">Cancellation token</param>
         /// <returns>Paged result of synchronized clients</returns>
-        Task<PagedResult<Client>> GetSynchronizedWithVollAsync(int pageNumber, int pageSize, CancellationToken cancellationToken = default);
+        Task<PagedResult<Client>> GetSynchronizedWithBemChatAsync(int pageNumber, int pageSize, CancellationToken cancellationToken = default);
 
         /// <summary>
-        /// Get clients not synchronized with Voll yet
+        /// Get clients not synchronized with BemChat yet
         /// </summary>
         /// <param name="cancellationToken">Cancellation token</param>
         /// <returns>Paged result of clients pending synchronization</returns>
-        Task<PagedResult<Client>> GetNotSynchronizedWithVollAsync(int pageNumber, int pageSize, CancellationToken cancellationToken = default);
+        Task<PagedResult<Client>> GetNotSynchronizedWithBemChatAsync(int pageNumber, int pageSize, CancellationToken cancellationToken = default);
 
         /// <summary>
-        /// Get clients that need resynchronization with Voll (old sync date)
+        /// Get clients that need resynchronization with BemChat (old sync date)
         /// </summary>
         /// <param name="daysToExpire">Days after which synchronization is considered expired</param>
         /// <param name="cancellationToken">Cancellation token</param>

@@ -10,12 +10,12 @@ namespace CRMIntegration.Domain.Campaings
     public interface ICampaignRepository : IRepository<Campaign, Guid>
     {
         /// <summary>
-        /// Get a campaign by its Voll campaign ID
+        /// Get a campaign by its BemChat campaign ID
         /// </summary>
-        /// <param name="idCampanhaVoll">Voll campaign ID</param>
+        /// <param name="idCampanhaBemChat">BemChat campaign ID</param>
         /// <param name="cancellationToken">Cancellation token</param>
         /// <returns>Campaign if found, null otherwise</returns>
-        Task<Campaign?> GetByVollCampaignIdAsync(string idCampanhaVoll, CancellationToken cancellationToken = default);
+        Task<Campaign?> GetByBemChatCampaignIdAsync(string idCampanhaBemChat, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Get a campaign by ID including all its messages
@@ -135,12 +135,12 @@ namespace CRMIntegration.Domain.Campaings
         Task<CampaignMessage?> GetMessageByIdAsync(Guid id, CancellationToken cancellationToken = default);
 
         /// <summary>
-        /// Get a message by Voll message ID
+        /// Get a message by BemChat message ID
         /// </summary>
-        /// <param name="idMensagemVoll">Voll message ID (wamid)</param>
+        /// <param name="idMensagemBemChat">BemChat message ID (wamid)</param>
         /// <param name="cancellationToken">Cancellation token</param>
         /// <returns>Message if found, null otherwise</returns>
-        Task<CampaignMessage?> GetByVollMessageIdAsync(string idMensagemVoll, CancellationToken cancellationToken = default);
+        Task<CampaignMessage?> GetByBemChatMessageIdAsync(string idMensagemBemChat, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Get all messages for a specific campaign

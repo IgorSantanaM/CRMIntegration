@@ -3,7 +3,7 @@ using CRMIntegration.Application.Features.Campaigns.DTOs;
 using CRMIntegration.Domain.Campaings;
 using CRMIntegration.Domain.Core.Data;
 using CRMIntegration.Domain.Core.Exceptions;
-using CRMIntegration.Infra.Services.Voll;
+using CRMIntegration.Infra.Services.BemChat;
 using CRMIntegration.Services.CobMais;
 using CRMIntegration.Services.CobMais.DTOs;
 using CRMIntegration.Services.CobMais.DTOs.Requests;
@@ -15,13 +15,13 @@ using Microsoft.Extensions.Logging;
 namespace CRMIntegration.Application.Features.Campaigns.Commands.TriggerCampaignFromCsv
 {
     public class TriggerCampaignFromCsvCommandHandler(
-         IPublishEndpoint publishEndpoint,
-         ICobMaisService cobMaisService,
-         ICampaignRepository campaignRepository,
-         IUnitOfwork unitOfWork,
-         VollOptions vollOptions,
-         ILogger<TriggerCampaignFromCsvCommandHandler> logger)
-         : IRequestHandler<TriggerCampaignFromCsvCommand, TriggerCampaignFromCsvResponse>
+       IPublishEndpoint publishEndpoint,
+       ICobMaisService cobMaisService,
+       ICampaignRepository campaignRepository,
+       IUnitOfwork unitOfWork,
+       BemChatOptions bemChatOptions,
+       ILogger<TriggerCampaignFromCsvCommandHandler> logger)
+       : IRequestHandler<TriggerCampaignFromCsvCommand, TriggerCampaignFromCsvResponse>
     {
         public async Task<TriggerCampaignFromCsvResponse> Handle(
             TriggerCampaignFromCsvCommand request,
@@ -31,8 +31,7 @@ namespace CRMIntegration.Application.Features.Campaigns.Commands.TriggerCampaign
                 request.TemplateName, cancellationToken);
 
             if (exists)
-                throw new DomainException(
-                    "Campaign already triggered today for this template.");
+                throw new DomainException("Campaign already triggered today for this template.");
 
             var (parsed, skipped) = await ParseCsvAsync(request.CsvFile, cancellationToken);
 
@@ -41,27 +40,17 @@ namespace CRMIntegration.Application.Features.Campaigns.Commands.TriggerCampaign
                 parsed.Count + skipped, parsed.Count, skipped);
 
             if (parsed.Count == 0)
-                throw new DomainException(
-                    "CSV contains no valid contacts after parsing.");
-
-            var cpfSet = parsed
-                .Select(c => NormalizeCpf(c.Cpf))
-                .Where(cpf => !string.IsNullOrEmpty(cpf))
-                .ToHashSet();
-
-            logger.LogInformation(
-                "[CobMais] Fetching actionable contacts for {Count} CPFs.", cpfSet.Count);
+                throw new DomainException("CSV contains no valid contacts after parsing.");
 
             var cobMaisContacts = await cobMaisService.GetActionableContactsAsync(
-                new GetActionableContactsRequest(null, null),
-                cancellationToken);
+                new GetActionableContactsRequest(null, null), cancellationToken);
 
             var cobMaisIndex = cobMaisContacts
                 .Where(c => !string.IsNullOrEmpty(c.CpfCnpj))
                 .GroupBy(c => NormalizeCpf(c.CpfCnpj))
                 .ToDictionary(g => g.Key, g => g.First());
 
-            var finalContacts = new List<(CsvContactDto Csv, ActionableContactDto CobMais)>();
+            var finalContacts = new List<(CsvContactDto Csv, dynamic CobMais)>();
             var unmatchedCount = 0;
 
             foreach (var csvRow in parsed)
@@ -71,7 +60,7 @@ namespace CRMIntegration.Application.Features.Campaigns.Commands.TriggerCampaign
                 if (!cobMaisIndex.TryGetValue(normalizedCpf, out var cobMaisContact))
                 {
                     logger.LogWarning(
-                        "[CSV] CPF {Cpf} not found in CobMais actionable contacts. Skipping.",
+                        "[CSV] CPF {Cpf} não encontrado nos contatos acionáveis do CobMais. Ignorando.",
                         csvRow.Cpf);
                     unmatchedCount++;
                     continue;
@@ -81,32 +70,31 @@ namespace CRMIntegration.Application.Features.Campaigns.Commands.TriggerCampaign
             }
 
             logger.LogInformation(
-                "[CSV] Matched {Matched} contacts. Unmatched={Unmatched}",
+                "[CSV] Matched={Matched} Unmatched={Unmatched}",
                 finalContacts.Count, unmatchedCount);
 
             if (finalContacts.Count == 0)
                 throw new DomainException(
-                    "No CSV contacts could be matched against CobMais actionable contacts.");
+                    "Nenhum contato do CSV pôde ser associado aos contatos acionáveis do CobMais.");
 
             var campaign = new Campaign(
                 nome: $"CSV_{request.TemplateName}_{DateTime.UtcNow:yyyyMMddHHmmss}",
                 template: request.TemplateName,
-                channelIdVoll: vollOptions.ChannelId,
+                channelIdBemChat: bemChatOptions.DefaultWhatsAppId?.ToString() ?? "default",
                 dataDisparo: DateTime.UtcNow,
                 totalContatos: finalContacts.Count
             );
 
             campaign.StartProcessing();
-
             await campaignRepository.AddAsync(campaign);
 
             logger.LogInformation(
-                "[Campaign] Created {CampaignId} with {Total} contacts.",
+                "[Campaign] Criada {CampaignId} com {Total} contatos.",
                 campaign.Id, finalContacts.Count);
 
             foreach (var (csv, cobMais) in finalContacts)
             {
-                await publishEndpoint.Publish<SendContactMessageCommand>(
+                await publishEndpoint.Publish(
                     new SendContactMessageCommand(
                         CampaignId: campaign.Id,
                         CorrelationId: Guid.NewGuid(),
@@ -118,17 +106,18 @@ namespace CRMIntegration.Application.Features.Campaigns.Commands.TriggerCampaign
                         TemplateName: request.TemplateName
                     ), cancellationToken);
             }
+
             await unitOfWork.SaveChangesAsync(cancellationToken);
 
             logger.LogInformation(
-                "[Campaign] All {Count} messages published. CampaignId={CampaignId}",
+                "[Campaign] {Count} mensagens publicadas. CampaignId={CampaignId}",
                 finalContacts.Count, campaign.Id);
 
             return new TriggerCampaignFromCsvResponse(
                 CampaignId: campaign.Id,
                 TotalContacts: finalContacts.Count,
                 Skipped: skipped + unmatchedCount,
-                Message: $"Campaign triggered. {finalContacts.Count} messages queued."
+                Message: $"Campanha disparada. {finalContacts.Count} mensagens enfileiradas."
             );
         }
 
@@ -147,19 +136,11 @@ namespace CRMIntegration.Application.Features.Campaigns.Commands.TriggerCampaign
             {
                 line = line.TrimStart(',').Trim();
 
-                if (string.IsNullOrWhiteSpace(line))
-                {
-                    skipped++;
-                    continue;
-                }
+                if (string.IsNullOrWhiteSpace(line)) { skipped++; continue; }
 
                 var cols = line.Split(',');
 
-                if (cols.Length < 8)
-                {
-                    skipped++;
-                    continue;
-                }
+                if (cols.Length < 8) { skipped++; continue; }
 
                 var nome = cols[0].Trim();
                 var cpf = cols[1].Trim();
@@ -170,23 +151,10 @@ namespace CRMIntegration.Application.Features.Campaigns.Commands.TriggerCampaign
                 var equipe = cols[6].Trim();
                 var ultimoOperador = cols[7].Trim();
 
-                if (string.IsNullOrWhiteSpace(cpf))
-                {
-                    skipped++;
-                    continue;
-                }
+                if (string.IsNullOrWhiteSpace(cpf)) { skipped++; continue; }
+                if (string.IsNullOrWhiteSpace(nome)) { skipped++; continue; }
 
-                if (string.IsNullOrWhiteSpace(nome))
-                {
-                    skipped++;
-                    continue;
-                }
-
-                if (status != "ANDAMENTO" && status != "NOVO")
-                {
-                    skipped++;
-                    continue;
-                }
+                if (status != "ANDAMENTO" && status != "NOVO") { skipped++; continue; }
 
                 if (!int.TryParse(diasAtrasoRaw, out var diasAtraso))
                     diasAtraso = 0;

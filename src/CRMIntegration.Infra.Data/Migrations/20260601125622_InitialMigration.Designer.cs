@@ -12,7 +12,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace CRMIntegration.Infra.Data.Migrations
 {
     [DbContext(typeof(CRMIntegrationContext))]
-    [Migration("20260504012911_InitialMigration")]
+    [Migration("20260601125622_InitialMigration")]
     partial class InitialMigration
     {
         /// <inheritdoc />
@@ -30,7 +30,7 @@ namespace CRMIntegration.Infra.Data.Migrations
                     b.Property<Guid>("Id")
                         .HasColumnType("uuid");
 
-                    b.Property<string>("ChannelIdVoll")
+                    b.Property<string>("ChannelIdBemChat")
                         .IsRequired()
                         .HasMaxLength(100)
                         .HasColumnType("character varying(100)");
@@ -44,7 +44,7 @@ namespace CRMIntegration.Infra.Data.Migrations
                     b.Property<DateTime?>("DataFinalizacao")
                         .HasColumnType("timestamp with time zone");
 
-                    b.Property<string>("IdCampanhaVoll")
+                    b.Property<string>("IdCampanhaBemChat")
                         .IsRequired()
                         .HasMaxLength(100)
                         .HasColumnType("character varying(100)");
@@ -79,7 +79,7 @@ namespace CRMIntegration.Infra.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("IdCampanhaVoll")
+                    b.HasIndex("IdCampanhaBemChat")
                         .IsUnique();
 
                     b.ToTable("Campaigns", (string)null);
@@ -108,7 +108,7 @@ namespace CRMIntegration.Infra.Data.Migrations
                     b.Property<DateTime?>("DataLeitura")
                         .HasColumnType("timestamp with time zone");
 
-                    b.Property<string>("IdMensagemVoll")
+                    b.Property<string>("IdMensagemBemChat")
                         .IsRequired()
                         .HasMaxLength(100)
                         .HasColumnType("character varying(100)");
@@ -152,7 +152,7 @@ namespace CRMIntegration.Infra.Data.Migrations
                     b.Property<DateTime>("DataCriacao")
                         .HasColumnType("timestamp with time zone");
 
-                    b.Property<DateTime?>("DataSincronizacaoVoll")
+                    b.Property<DateTime?>("DataSincronizacaoBemChat")
                         .HasColumnType("timestamp with time zone");
 
                     b.Property<DateTime?>("DataUltimoAcionamento")
@@ -162,16 +162,16 @@ namespace CRMIntegration.Infra.Data.Migrations
                         .HasMaxLength(100)
                         .HasColumnType("character varying(100)");
 
+                    b.Property<string>("IdBemChat")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("character varying(100)");
+
                     b.Property<int>("IdCobMais")
                         .HasColumnType("integer");
 
                     b.Property<int?>("IdTelefoneCobMais")
                         .HasColumnType("integer");
-
-                    b.Property<string>("IdVoll")
-                        .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("character varying(100)");
 
                     b.Property<string>("Nome")
                         .IsRequired()
@@ -188,10 +188,10 @@ namespace CRMIntegration.Infra.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("IdCobMais")
+                    b.HasIndex("IdBemChat")
                         .IsUnique();
 
-                    b.HasIndex("IdVoll")
+                    b.HasIndex("IdCobMais")
                         .IsUnique();
 
                     b.ToTable("Clients", (string)null);

@@ -2,31 +2,30 @@
 using CRMIntegration.Domain.Campaings;
 using CRMIntegration.Domain.Clients;
 using CRMIntegration.Domain.Core.Data;
-using CRMIntegration.Infra.Services.Voll;
+using CRMIntegration.Services.BemChat;
+using CRMIntegration.Services.BemChat.DTOs.Requests;
 using CRMIntegration.Services.CobMais;
-using CRMIntegration.Services.Voll;
-using CRMIntegration.Services.Voll.DTOs;
-using CRMIntegration.Services.Voll.DTOs.Requests;
 using MassTransit;
 using Microsoft.Extensions.Logging;
 
 namespace CRMIntegration.Infra.Consumers.Consumers
 {
-    public class TriggerCampaignConsumer(IVollService vollService,
+    public class TriggerCampaignConsumer(
+        IBemChatService bemChatService,
         ICobMaisService cobMaisService,
         IClientRepository clientRepository,
         ICampaignRepository campaignRepository,
         IUnitOfwork unitOfWork,
         ILogger<TriggerCampaignConsumer> logger
-        ) : IConsumer<SendContactMessageCommand>
+    ) : IConsumer<SendContactMessageCommand>
     {
         public async Task Consume(ConsumeContext<SendContactMessageCommand> context)
         {
-            SendContactMessageCommand? cmd = context.Message;
+            var cmd = context.Message;
 
             if (cmd is null)
             {
-                logger.LogInformation("Received null message, ignoring.");
+                logger.LogWarning("Mensagem nula recebida, ignorando.");
                 return;
             }
 
@@ -37,19 +36,19 @@ namespace CRMIntegration.Infra.Consumers.Consumers
                 ["PhoneNumber"] = cmd.PhoneNumber
             });
 
-            var alreadySent = await campaignRepository.ExistsForClientInCampaignAsync(cmd.CampaignId,
-                cmd.IdPessoa,
-                context.CancellationToken);
+            var alreadySent = await campaignRepository.ExistsForClientInCampaignAsync(
+                cmd.CampaignId, cmd.IdPessoa, context.CancellationToken);
 
             if (alreadySent)
             {
-                logger.LogWarning($"Message for client {cmd.IdPessoa} in campaign {cmd.CampaignId} " +
-                    $"has already been sent, skipping.");
+                logger.LogWarning(
+                    "Mensagem para o cliente {IdPessoa} na campanha {CampaignId} já foi enviada. Ignorando.",
+                    cmd.IdPessoa, cmd.CampaignId);
                 return;
             }
 
             var client = await clientRepository.GetByIdCobMaisAsync(
-           cmd.IdPessoa, context.CancellationToken);
+                cmd.IdPessoa, context.CancellationToken);
 
             if (client is null)
             {
@@ -57,74 +56,58 @@ namespace CRMIntegration.Infra.Consumers.Consumers
                     cmd.IdPessoa, cmd.Nome, cmd.PhoneNumber, cmd.CpfCnpj,
                     idTelefoneCobMais: cmd.IdPessoa);
 
-                var request = new CreateContactRequest(
-                    Whatsapp: cmd.PhoneNumber,
-                    ChatName: cmd.Nome,
-                    Email: null,
-                    ChatOperator: null,
-                    CustomFields:
-                    [
-                        new("cf_cobmais_id", cmd.IdPessoa.ToString()),
-                        new("cf_cpfcnpj", cmd.CpfCnpj)
-                    ]
-                );
+                client.SynchronizeWithBemChat($"bemchat_{cmd.IdPessoa}");
 
-                var vollContactResponse = await vollService.CreateContactAsync(request, context.CancellationToken);
-
-                client.SynchronizeWithVoll(vollContactResponse.Id);
                 await clientRepository.AddAsync(client);
+
+                logger.LogDebug(
+                    "[BemChat] Novo cliente criado localmente: IdPessoa={IdPessoa} Nome={Nome}.",
+                    cmd.IdPessoa, cmd.Nome);
             }
-            else if (!client.IsSynchronizedWithVoll())
+            else if (!client.IsSynchronizedWithBemChat())
             {
-                CreateContactRequest request = new(cmd.PhoneNumber, cmd.Nome, null, null, [
-                        new("cf_cobmais_id", cmd.IdPessoa.ToString()),
-                        new("cf_cpfcnpj", cmd.CpfCnpj)
-                    ]);
-
-                var vollId = await vollService.GetOrCreateContactAsync(
-                    request,
-                    context.CancellationToken);
-                client.SynchronizeWithVoll(vollId);
+                client.SynchronizeWithBemChat($"bemchat_{cmd.IdPessoa}");
             }
 
-            var campaign = await campaignRepository.GetByIdAsync(cmd.CampaignId, context.CancellationToken);
+            var campaign = await campaignRepository.GetByIdAsync(
+                cmd.CampaignId, context.CancellationToken);
 
             if (campaign is null)
             {
-                logger.LogError($"Campaign with id {cmd.CampaignId} not found, aborting.");
+                logger.LogError(
+                    "Campanha {CampaignId} não encontrada. Abortando envio para {PhoneNumber}.",
+                    cmd.CampaignId, cmd.PhoneNumber);
                 return;
             }
 
-            var message = new CampaignMessage(
-                cmd.CampaignId,
-                client.Id);
+            var message = new CampaignMessage(cmd.CampaignId, client.Id);
             await campaignRepository.AddMessageAsync(message, context.CancellationToken);
 
-            var sendResponse = await vollService.SendTemplateMessageAsync(
-            new SendTemplateMessageRequest(
-                cmd.PhoneNumber,
-                new CampaignTemplateDto(
-                    new CampaignTemplateLanguage("deterministic", "pt_BR"),
-                    cmd.TemplateName,
-                    []
+            var sendResponse = await bemChatService.SendTextMessageAsync(
+                new SendTextMessageRequest(
+                    Number: cmd.PhoneNumber,
+                    Body: cmd.TemplateName
                 ),
-                "individual",
-                "template",
-                null
-            ), context.CancellationToken);
+                context.CancellationToken);
 
-            message.MarkAsDelivered(sendResponse.MessageId);
-
+            message.MarkAsDelivered(sendResponse.MessageId ?? $"bemchat_{Guid.NewGuid()}");
             client.MarkAsTriggered();
-            await campaignRepository.IncrementSentCountAsync(campaign.Id, context.CancellationToken);
+
+            await campaignRepository.IncrementSentCountAsync(
+                campaign.Id, context.CancellationToken);
 
             if (client.IdTelefoneCobMais.HasValue)
             {
-                await cobMaisService.MarkPhoneAsNonActionableAsync(client.IdTelefoneCobMais.Value, context.CancellationToken);
+                await cobMaisService.MarkPhoneAsNonActionableAsync(
+                    client.IdTelefoneCobMais.Value, context.CancellationToken);
                 client.MarkAsNonActionable();
             }
 
             await unitOfWork.SaveChangesAsync(context.CancellationToken);
+
+            logger.LogInformation(
+                "[BemChat] ✓ Mensagem enviada para {PhoneNumber} (IdPessoa={IdPessoa}).",
+                cmd.PhoneNumber, cmd.IdPessoa);
         }
     }
 }
